@@ -1,3 +1,10 @@
+import tkinter as tk
+import matplotlib
 
-def startFrontend():
-    print("Starting Frontend")
+
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Cool Stock Project")
+
+

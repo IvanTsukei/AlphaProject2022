@@ -1,6 +1,7 @@
 import json
-from pathlib import Path
+import pathlib
 
+filePath = pathlib.Path(__file__).parent.resolve() / 'profiles.json'
 
 profiles = {}
 
@@ -12,10 +13,6 @@ def add_profile():
 
 add_profile()
 
-print(profiles)
-
-
-output_path = '/AlphaProject2022/src/backend'
-with open(output_path, 'a', encoding='utf8') as f:
+with open(filePath, 'a', encoding='utf8') as f:
     json.dump(profiles, f, indent=4)
 f.close()

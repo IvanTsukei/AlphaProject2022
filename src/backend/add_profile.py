@@ -9,8 +9,6 @@ regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 with open(filePath, 'r', encoding='utf8') as f: # Opening the file for for check purposes.
     userProfiles = json.loads("[" + f.read().replace("}{", "},\n{") + "]") # Makes it so I can iterate over the contests.
 
-print(userProfiles)
-
 def invalid_name_input(value): # Name checker.
     if len(value) == 0 or len(value) > 20:
         return "Please only enter between 0 and 20 characters."

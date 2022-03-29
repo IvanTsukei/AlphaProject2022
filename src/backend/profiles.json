@@ -1,22 +1,13 @@
 {
   "name": "A",
-  "email": "A"
+  "email": "a@a.com",
+  "stocks": []
+}{
+  "name": "test",
+  "email": "test@test.com",
+  "stocks": []
 }{
   "name": "B",
-  "email": "B"
-}{
-  "name": "C",
-  "email": "C"
-}{
-  "name": "D",
-  "email": "D"
-}{
-  "name": "DD",
-  "email": "DDDD"
-}{
-  "name": "Test",
-  "email": "test@test.com"
-}{
-  "name": "Testing",
-  "email": "NA"
+  "email": "b@b.com",
+  "stocks": []
 }

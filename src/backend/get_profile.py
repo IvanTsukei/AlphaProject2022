@@ -1,15 +1,19 @@
 import storage
-import list_profiles
+from list_profiles import get_profiles
 
-def get_profile(value):
+#Takes in a profile name, returns false if profile is not found, otherwise returns the profile
+def get_profile(name):
+    if name.lower() in [profile['name'].lower() for profile in get_profiles()]:
+        for profile in get_profiles():
+            if profile['name'].lower() == name.lower():
+                return profile
 
-    if value.lower() in [x.lower() for x in list_profiles.all_profiles()]:
-        return 
+        return False #Shouldn't hit this, but just in case.
     else:
-        return f"Please select an existing profile from those listed below.\n{list_profiles.all_profiles()}"
+        return False
 
 
 ##### WIP TO GET FUNCTION WORKING. List profiles also broke #####
 
 
-get_profile('1')
+print(get_profile('R'))

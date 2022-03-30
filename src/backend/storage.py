@@ -15,5 +15,3 @@ def read_data():
 def write_data(data):
     with open(file_path(), "w") as outFile:
         outFile.write(json.dumps(data, indent = 4))
-
-

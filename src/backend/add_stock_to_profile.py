@@ -10,3 +10,6 @@ def add_stock():
         else:
             storage.read_data()["stocks"].append(stocks)
             continue
+
+
+##### WIP TO GET FUNCTION WORKING #####

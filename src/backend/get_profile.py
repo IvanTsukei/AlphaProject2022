@@ -1,5 +1,5 @@
 import json
-import storage
+from backend.storage import read_data
 from pathlib import Path
 
 filePath = Path(__file__).parent.resolve() / 'profiles.json' # Points to the storage area

@@ -1,13 +1,19 @@
 {
-  "name": "A",
-  "email": "a@a.com",
-  "stocks": []
-}{
-  "name": "test",
-  "email": "test@test.com",
-  "stocks": []
-}{
-  "name": "B",
-  "email": "b@b.com",
-  "stocks": []
+    "profiles": [
+        {
+            "name": "A",
+            "email": "a@a.com",
+            "stocks": []
+        },
+        {
+            "name": "test",
+            "email": "test@test.com",
+            "stocks": []
+        },
+        {
+            "name": "B",
+            "email": "b@b.com",
+            "stocks": []
+        }
+    ]
 }

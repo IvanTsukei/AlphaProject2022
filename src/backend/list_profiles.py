@@ -1,10 +1,9 @@
-import json
-import pathlib
+import storage
 
-filePath = pathlib.Path(__file__).parent.resolve() / 'profiles.json'
+def list_profiles():
+    currentProfiles = [next(iter(i.values())) for i in storage.read_data()['profiles']]
+    for i in currentProfiles:
+        print(next(iter(i.values()))) # Iterates over each profile and prints name.
 
-with open(filePath, 'r', encoding='utf8') as f: # Opening the file for for check purposes.
-    userProfiles = json.loads("[" + f.read().replace("}{", "},\n{") + "]") # Makes it so I can iterate over the contests.
 
-for i in userProfiles:
-    print(next(iter(i.values()))) # Iterates over each profile and prints name.
+##### WIP TO GET FUNCTION WORKING #####

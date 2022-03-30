@@ -1,7 +1,10 @@
 import pandas as pd
 import yfinance as yf
 import numpy as np
+import storage
 # import pyqt5 as pyq
+
+print(storage.read_data())
 
 
 print('> Welcome to the Stock notifier!\nPlease input the ticker symbols for the stocks you wish to look up.')

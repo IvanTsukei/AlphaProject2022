@@ -48,5 +48,3 @@ def add_profile(name, email):
     data['profiles'].append({'name': name, 'email': email, 'stocks': []})
     storage.write_data(data)
     return True
-
-add_profile('cock', 'cock@cock.li')

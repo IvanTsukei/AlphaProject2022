@@ -29,4 +29,3 @@ def add_stock(prof, stock):
 
 ##### WIP TO GET FUNCTION WORKING #####
 
-add_stock('A','AAPL')

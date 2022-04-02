@@ -23,9 +23,7 @@ def add_stock(name, stock):
         print(invalid_stock_input(stock))
         return False
 
-    data = storage.read_data()
-
-    data['profiles'][profile_index(name)]['stocks'].append(stock)
+    ### Adding the stock after checking if the profile exists.
 
     if get_profile(name) == "Please enter a valid profile name.":
         print(get_profile(name))

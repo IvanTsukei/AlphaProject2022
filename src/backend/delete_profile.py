@@ -1,14 +1,12 @@
+from get_profile import profile_index
 import storage
 
 ### Takes in a profile name, returns false if profile is not found, otherwise deletes the profile
 
-def delete_profile(prof):
+def delete_profile(name):
     data = storage.read_data()
 
-    if prof.lower() in [profile['name'].lower() for profile in data['profiles']]:
-        for profile in data['profiles']:
-                if profile['name'].lower() == prof.lower():
-                    profile.clear()
+    del data['profiles'][profile_index(name)]
 
     storage.write_data(data)
     return True

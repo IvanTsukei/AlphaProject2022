@@ -1,7 +1,8 @@
 import storage
 import yfinance as yf
+from get_profile import profile_index
 
-def add_stock(prof, stock):
+def add_stock(name, stock):
 
     # if get_profile.get_profile(profile):
     #     print (get_profile.get_profile(profile))
@@ -18,10 +19,7 @@ def add_stock(prof, stock):
 
     data = storage.read_data()
 
-    if prof.lower() in [profile['name'].lower() for profile in data['profiles']]:
-        for profile in data['profiles']:
-                if profile['name'].lower() == prof.lower():
-                    profile['stocks'].append(stock)
+    data['profiles'][profile_index(name)
 
     storage.write_data(data)
     return True

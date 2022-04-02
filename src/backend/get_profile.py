@@ -13,3 +13,17 @@ def get_profile(name):
         return False #Shouldn't hit this, but just in case.
     else:
         return "Please enter a valid profile name."
+
+def profile_index(name):
+    profiles = return_profiles()
+    if name.lower() in [profile['name'].lower() for profile in profiles]:
+        for i in range(len(profiles)):
+            if profiles[i]['name'] == name:
+                return i
+        return False
+    return "Please enter a valid profile name."
+
+def profile_exists(name):
+    return name.lower() in [profile['name'].lower() for profile in return_profiles()]
+
+

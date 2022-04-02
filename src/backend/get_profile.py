@@ -2,6 +2,8 @@ from list_profiles import return_profiles
 
 ### Takes in a profile name, returns false if profile is not found, otherwise returns the profile
 
+print([profile['name'].lower() for profile in return_profiles()])
+
 def get_profile(name):
     if name.lower() in [profile['name'].lower() for profile in return_profiles()]:
         for profile in return_profiles():

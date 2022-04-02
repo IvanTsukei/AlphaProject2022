@@ -1,14 +1,11 @@
 import storage
 import yfinance as yf
-import get_profile
 
-def add_stock(profile, stock):
+def add_stock(prof, stock):
 
     # if get_profile.get_profile(profile):
     #     print (get_profile.get_profile(profile))
     #     return False
-
-    currentProfiles = storage.read_data()['profiles']
     
     def invalid_stock_input(stock):
         ticker = yf.Ticker(stock)
@@ -19,16 +16,17 @@ def add_stock(profile, stock):
         print(invalid_stock_input(stock))
         return False
 
-
     data = storage.read_data()
-    print(get_profile.get_profile(profile)['stocks'])
-    print(stock)
-    data[get_profile.get_profile(profile)]['stocks'].append(stock)
-    print(get_profile.get_profile(profile)['stocks'])
+
+    if prof.lower() in [profile['name'].lower() for profile in data['profiles']]:
+        for profile in data['profiles']:
+                if profile['name'].lower() == prof.lower():
+                    profile['stocks'].append(stock)
+
     storage.write_data(data)
     return True
 
 
 ##### WIP TO GET FUNCTION WORKING #####
 
-add_stock('R','MSFT')
+add_stock('A','AAPL')

@@ -3,7 +3,10 @@
         {
             "name": "A",
             "email": "a@a.com",
-            "stocks": []
+            "stocks": [
+                "MSFT",
+                "AAPL"
+            ]
         },
         {
             "name": "test",

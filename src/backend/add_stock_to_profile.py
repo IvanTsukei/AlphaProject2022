@@ -1,29 +1,39 @@
 import storage
 import yfinance as yf
 from get_profile import profile_index
+from get_profile import get_profile
 
 def add_stock(name, stock):
 
-    # if get_profile.get_profile(profile):
-    #     print (get_profile.get_profile(profile))
-    #     return False
+    data = storage.read_data()
+
+    ### Checking if stock ticker is valid.
     
     def invalid_stock_input(stock):
         ticker = yf.Ticker(stock)
         if (ticker.info['regularMarketOpen'] == None):
             return "Please enter a valid stock ticker."
 
+    def stock_exists(stock):
+        existing = data['profiles'][profile_index(name)]['stocks']
+        if stock in existing:
+            return "This Ticker is already in this profile."
+
     if invalid_stock_input(stock):
         print(invalid_stock_input(stock))
         return False
 
-    data = storage.read_data()
+    ### Adding the stock after checking if the profile exists.
 
-    data['profiles'][profile_index(name)].append(stock)
+    if get_profile(name) == "Please enter a valid profile name.":
+        print(get_profile(name))
+
+    elif stock_exists(stock):
+        print(stock_exists(stock))
+        return False
+
+    else:
+        data['profiles'][profile_index(name)]['stocks'].append(stock)
 
     storage.write_data(data)
     return True
-
-
-##### WIP TO GET FUNCTION WORKING #####
-

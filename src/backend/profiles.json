@@ -5,13 +5,17 @@
             "email": "a@a.com",
             "stocks": [
                 "MSFT",
-                "AAPL"
+                "AAPL",
+                "TSLA",
+                "PYPL"
             ]
         },
         {
             "name": "test",
             "email": "test@test.com",
-            "stocks": []
+            "stocks": [
+                "TSLA"
+            ]
         },
         {
             "name": "B",
@@ -21,16 +25,6 @@
         {
             "name": "CD",
             "email": "CD@yum.com"
-        },
-        {
-            "name": "C",
-            "email": "C@c.com",
-            "stocks": []
-        },
-        {
-            "name": "cock",
-            "email": "cock@cock.li",
-            "stocks": []
         }
     ]
 }

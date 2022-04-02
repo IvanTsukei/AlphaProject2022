@@ -19,7 +19,7 @@ def add_stock(name, stock):
 
     data = storage.read_data()
 
-    data['profiles'][profile_index(name)
+    data['profiles'][profile_index(name)].append(stock)
 
     storage.write_data(data)
     return True

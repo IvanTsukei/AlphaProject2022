@@ -3,6 +3,8 @@ import datetime as dt
 import pandas_datareader.data as web
 import numpy as np
 from datetime import datetime
+from scipy import stats
+import seaborn as sns
 
 ### Function Imports
 
@@ -45,7 +47,7 @@ def stock_basic_history(name, starting, ending):
     if get_profile(name) == "Please enter a valid profile name.":
         print(get_profile(name))
     else:
-        df = web.DataReader(existing, 'yahoo', start = starting, end = ending)
+        df = web.DataReader(existing, 'yahoo', starting, ending)
         return df.head()
         # for stock in existing:
         #     df = web.DataReader(stock, 'yahoo', start = starting, end = ending)
@@ -55,7 +57,7 @@ def stock_basic_history(name, starting, ending):
         #         print(df.head())
 
 
-def stock_dividends(name, starting, ending):
+def portfolio_dividends(name, starting, ending):
     existing = stock_list(name)
 
     if get_profile(name) == "Please enter a valid profile name.":
@@ -75,8 +77,8 @@ def stock_dividend_date(name):
     if get_profile(name) == "Please enter a valid profile name.":
         print(get_profile(name))
     else:
-        divDate = web.get_quote_yahoo(existing)['dividendDate']
-        print(datetime.fromtimestamp(divDate))
+        div_date = web.get_quote_yahoo(existing)['dividendDate']
+        print(div_date)
                             
 
 def stock_marketcap(name):
@@ -85,8 +87,8 @@ def stock_marketcap(name):
     if get_profile(name) == "Please enter a valid profile name.":
         print(get_profile(name))
     else:
-        marketCap = web.get_quote_yahoo(existing)['marketCap']
-        print(marketCap)
+        market_cap = web.get_quote_yahoo(existing)['marketCap']
+        print(market_cap)
 
 
 def stock_pe(name):
@@ -95,18 +97,78 @@ def stock_pe(name):
     if get_profile(name) == "Please enter a valid profile name.":
         print(get_profile(name))
     else:
-        priceToEarnings = web.get_quote_yahoo(existing)['trailingPE']
-        print(priceToEarnings)
+        price_earnings = web.get_quote_yahoo(existing)['trailingPE']
+        print(price_earnings)
 
 
-def stock_volume(name):
+def portfolio_daily_returns(name, starting, ending): # % change
     existing = data['profiles'][profile_index(name)]['stocks']
 
     if get_profile(name) == "Please enter a valid profile name.":
         print(get_profile(name))
     else:
-        priceToEarnings = web.get_quote_yahoo(existing)['dailyVolume']
-        print(priceToEarnings)
+        returns_data = web.DataReader(existing, 'yahoo', starting, ending)['Adj Close']
+        returns = returns_data.pct_change()
+        returns.dropna(inplace = True)
+        print(returns)
+
+
+def portfolio_beta(name, starting, ending):
+    existing = data['profiles'][profile_index(name)]['stocks']
+
+    weights = [1/len(existing) for x in range(len(existing))]
+
+    if get_profile(name) == "Please enter a valid profile name.":
+        print(get_profile(name))
+    else:
+        price_data = web.DataReader(existing, 'yahoo', starting, ending)['Adj Close']
+        price_data.dropna(inplace = True)
+        return_data = price_data.pct_change()[1:]
+        port_ret = (return_data*weights).sum(axis = 1)
+
+        print(port_ret)
+
+        ## Benchmarking Against the SPY
+
+        benchmark_price = web.DataReader('SPY', 'yahoo', starting, ending)
+        benchmark_ret = benchmark_price['Adj Close'].pct_change()[1:]
+
+        (beta, alpha) = stats.linregress(benchmark_ret.values, port_ret.values)[0:2]
+
+        print(beta)
+
+
+def portfolio_alpha(name, starting, ending):
+    existing = data['profiles'][profile_index(name)]['stocks']
+
+    if get_profile(name) == "Please enter a valid profile name.":
+        print(get_profile(name))
+    else:
+        price_data = web.DataReader(existing, 'yahoo', starting, ending)['Adj Close']
+        price_data.dropna(inplace = True)
+        return_data = price_data.pct_change()[1:]
+        port_ret = return_data.sum(axis = 1)
+
+        ## Benchmarking Against the SPY
+
+        benchmark_price = web.DataReader('SPY', 'yahoo', starting, ending)
+        benchmark_ret = benchmark_price['Adj Close'].pct_change()[1:]
+
+        (beta, alpha) = stats.linregress(benchmark_ret.values, port_ret.values)[0:2]
+
+        print(alpha)
+
+
+def stock_volume(name, starting, ending):
+    existing = data['profiles'][profile_index(name)]['stocks']
+
+    if get_profile(name) == "Please enter a valid profile name.":
+        print(get_profile(name))
+    else:
+        price_data = web.DataReader(existing, 'yahoo', starting, ending)
+        volume = price_data['Volume'].pct_change()
+        volume.dropna(inplace = True)
+        print(volume)
 
 
 ### Calculation Functions
@@ -117,8 +179,8 @@ def portfolio_extected_return(name, starting, ending):
     if get_profile(name) == "Please enter a valid profile name.":
         print(get_profile(name))
     else:
-        priceData = web.DataReader(existing, 'yahoo', starting, ending)
-        returns = priceData['Adj Close'].pct_change()
+        price_data = web.DataReader(existing, 'yahoo', starting, ending)
+        returns = price_data['Adj Close'].pct_change()
         weights = np.full((len(existing), 1), (1/len(existing)), dtype=float)
         returns['Portfolio'] = np.dot(returns,weights)
 
@@ -149,5 +211,5 @@ def ticker_full_name(name):
 
 ### Testing Below
 
-# stock_basic_history('A', '2017-04-22', '2018-04-22')
-stock_volume('A')
+portfolio_beta('A', '2013-01-01', '2018-03-01')
+# stock_dividend_date('A')

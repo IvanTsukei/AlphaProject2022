@@ -126,14 +126,15 @@ def portfolio_beta(name, starting, ending):
         return_data = price_data.pct_change()[1:]
         port_ret = (return_data*weights).sum(axis = 1)
 
-        print(port_ret)
 
         ## Benchmarking Against the SPY
 
-        benchmark_price = web.DataReader('SPY', 'yahoo', starting, ending)
-        benchmark_ret = benchmark_price['Adj Close'].pct_change()[1:]
+        benchmark_price = web.DataReader(['SPY'], 'yahoo', starting, ending)['Adj Close']
+        benchmark_price.dropna(inplace = True)
+        benchmark_price = benchmark_price.pct_change()[1:]
+        benchmark_ret = (benchmark_price).sum(axis = 1)
 
-        (beta, alpha) = stats.linregress(benchmark_ret.values, port_ret.values)[0:2]
+        linreg = stats.linregress(benchmark_ret.values, port_ret.values)
 
         print(beta)
 

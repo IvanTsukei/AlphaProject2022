@@ -1,5 +1,5 @@
 import re
-import storage
+import backend.storage as storage
 
 #Adds profile to profiles if it passes checks
 #If it doesn't pass checks, returns false, otherwise returns true

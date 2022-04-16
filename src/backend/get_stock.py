@@ -9,9 +9,9 @@ import yfinance as yf
 
 ### Function Imports
 
-import storage
-from get_profile import profile_index
-from get_profile import get_profile
+import backend.storage as storage
+from backend.get_profile import profile_index
+from backend.get_profile import get_profile
 
 ### Misc.
 

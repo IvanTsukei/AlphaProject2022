@@ -1,7 +1,7 @@
-import storage
+import backend.storage as storage
 import yfinance as yf
-from get_profile import profile_index
-from get_profile import get_profile
+from backend.get_profile import profile_index
+from backend.get_profile import get_profile
 
 def add_stock(name, stock):
 

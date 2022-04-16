@@ -21,10 +21,6 @@
             "name": "B",
             "email": "b@b.com",
             "stocks": []
-        },
-        {
-            "name": "CD",
-            "email": "CD@yum.com"
         }
     ]
 }

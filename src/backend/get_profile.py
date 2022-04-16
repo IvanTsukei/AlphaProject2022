@@ -1,4 +1,4 @@
-from list_profiles import return_profiles
+from backend.list_profiles import return_profiles
 
 ### Takes in a profile name, returns false if profile is not found, otherwise returns the profile
 

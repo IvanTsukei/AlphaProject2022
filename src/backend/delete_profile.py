@@ -1,6 +1,6 @@
-from get_profile import profile_index
-from get_profile import get_profile
-import storage
+from backend.get_profile import profile_index
+from backend.get_profile import get_profile
+import backend.storage as storage
 
 ### Takes in a profile name, returns false if profile is not found, otherwise deletes the profile
 
@@ -15,5 +15,3 @@ def delete_profile(name):
         storage.write_data(data)
         return True
 
-
-print(delete_profile('C'))

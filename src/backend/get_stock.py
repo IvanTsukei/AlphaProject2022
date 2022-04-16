@@ -5,6 +5,7 @@ import numpy as np
 from datetime import datetime
 from scipy import stats
 import seaborn as sns
+import yfinance as yf
 
 ### Function Imports
 
@@ -49,12 +50,6 @@ def stock_basic_history(name, starting, ending):
     else:
         df = web.DataReader(existing, 'yahoo', starting, ending)
         return df.head()
-        # for stock in existing:
-        #     df = web.DataReader(stock, 'yahoo', start = starting, end = ending)
-        #     if len(df) == 0:
-        #         print(f'{stock} has no history for this time period.')
-        #     else:
-        #         print(df.head())
 
 
 def portfolio_dividends(name, starting, ending):
@@ -71,7 +66,7 @@ def portfolio_dividends(name, starting, ending):
                 print(dividends.head())
 
 
-def stock_dividend_date(name):
+def stock_dividend_date(name): # Broken, needs fixing
     existing = data['profiles'][profile_index(name)]['stocks']
 
     if get_profile(name) == "Please enter a valid profile name.":
@@ -98,7 +93,7 @@ def stock_pe(name):
         print(get_profile(name))
     else:
         price_earnings = web.get_quote_yahoo(existing)['trailingPE']
-        print(price_earnings)
+        return price_earnings
 
 
 def portfolio_daily_returns(name, starting, ending): # % change
@@ -110,54 +105,44 @@ def portfolio_daily_returns(name, starting, ending): # % change
         returns_data = web.DataReader(existing, 'yahoo', starting, ending)['Adj Close']
         returns = returns_data.pct_change()
         returns.dropna(inplace = True)
-        print(returns)
+        return returns
 
 
-def portfolio_beta(name, starting, ending):
-    existing = data['profiles'][profile_index(name)]['stocks']
-
-    weights = [1/len(existing) for x in range(len(existing))]
-
-    if get_profile(name) == "Please enter a valid profile name.":
-        print(get_profile(name))
-    else:
-        price_data = web.DataReader(existing, 'yahoo', starting, ending)['Adj Close']
-        price_data.dropna(inplace = True)
-        return_data = price_data.pct_change()[1:]
-        port_ret = (return_data*weights).sum(axis = 1)
-
-
-        ## Benchmarking Against the SPY
-
-        benchmark_price = web.DataReader(['SPY'], 'yahoo', starting, ending)['Adj Close']
-        benchmark_price.dropna(inplace = True)
-        benchmark_price = benchmark_price.pct_change()[1:]
-        benchmark_ret = (benchmark_price).sum(axis = 1)
-
-        linreg = stats.linregress(benchmark_ret.values, port_ret.values)
-
-        print(beta)
-
-
-def portfolio_alpha(name, starting, ending):
+def stock_industry(name):
     existing = data['profiles'][profile_index(name)]['stocks']
 
     if get_profile(name) == "Please enter a valid profile name.":
         print(get_profile(name))
     else:
-        price_data = web.DataReader(existing, 'yahoo', starting, ending)['Adj Close']
-        price_data.dropna(inplace = True)
-        return_data = price_data.pct_change()[1:]
-        port_ret = return_data.sum(axis = 1)
+        df = pd.DataFrame()
 
-        ## Benchmarking Against the SPY
+        for stock in existing:
+            info = yf.Ticker(stock).info
+            industry = info['industry']
+            df = df.append({'Industry':industry}, ignore_index=True)
 
-        benchmark_price = web.DataReader('SPY', 'yahoo', starting, ending)
-        benchmark_ret = benchmark_price['Adj Close'].pct_change()[1:]
+        return df
 
-        (beta, alpha) = stats.linregress(benchmark_ret.values, port_ret.values)[0:2]
+def portfolio_beta(name):
+    existing = data['profiles'][profile_index(name)]['stocks']
 
-        print(alpha)
+    weights = [1/len(existing) for x in range(len(existing))] # Don't have time to code a more complex system that would allow people to enter their own weights. This assumes equally weighted portfolio 
+
+    if get_profile(name) == "Please enter a valid profile name.":
+        print(get_profile(name))
+    else:
+        raw_beta = []
+        weighted_beta = []
+
+        for stock in existing: 
+            info = yf.Ticker(stock).info
+            beta = info['beta']
+            raw_beta.append(beta)
+        
+        for x, y in zip(weights, raw_beta): # Accounting for the weight of each stock on the portfolio
+            weighted_beta.append(x*y)
+
+        return (sum(weighted_beta))
 
 
 def stock_volume(name, starting, ending):
@@ -212,5 +197,5 @@ def ticker_full_name(name):
 
 ### Testing Below
 
-portfolio_beta('A', '2013-01-01', '2018-03-01')
+stock_dividend_date('A')
 # stock_dividend_date('A')

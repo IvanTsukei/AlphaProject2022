@@ -26,6 +26,7 @@ class App(tk.Tk):
         self.plistWidget = ProfilesWidget(self, self.select_profile_callback)
         self.plistWidget.grid(row = 0, column = 1) #show it.
         self.grid_columnconfigure(0, minsize=300)
+        self.grid_rowconfigure(3, minsize=50)
 
         self.pWidget = ProfileWidget(self, self.back_callback)
 

@@ -9,7 +9,7 @@ def delete_profile(name):
 
     if get_profile(name) == "Please enter a valid profile name.":
         print(get_profile(name))
-        return False
+        raise ValueError ("Please enter a valid profile name.")
     else:
         del data['profiles'][profile_index(name)]
         storage.write_data(data)

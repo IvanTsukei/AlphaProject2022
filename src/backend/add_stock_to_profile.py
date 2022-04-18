@@ -3,6 +3,8 @@ import yfinance as yf
 from backend.get_profile import profile_index
 from backend.get_profile import get_profile
 
+### Main
+
 def add_stock(name, stock):
 
     data = storage.read_data()

@@ -9,7 +9,7 @@ from frontend.widgets.stock import StockWidget
 from frontend.widgets.profiles import ProfilesWidget
 from frontend.widgets.profile import ProfileWidget
 
-
+### Main
 
 class App(tk.Tk):
     state = "Home"
@@ -17,7 +17,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Python Portfolio Tracker")
-        self.configure(bg='#1c1c1c')
+        self.configure(bg='#272c38')
         # w, h = self.winfo_screenwidth(), self.winfo_screenheight()
         # self.geometry("%dx%d+0+0" % (w, h))  # Fullscreen
         self.geometry("900x900")
@@ -25,8 +25,7 @@ class App(tk.Tk):
 
         self.plistWidget = ProfilesWidget(self, self.select_profile_callback)
         self.plistWidget.grid(row = 0, column = 1) #show it.
-        self.grid_columnconfigure(0, minsize=300)
-        self.grid_rowconfigure(3, minsize=50)
+        self.grid_columnconfigure(0, minsize=230)
 
         self.pWidget = ProfileWidget(self, self.back_callback)
 

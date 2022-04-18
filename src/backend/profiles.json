@@ -16,11 +16,6 @@
             "stocks": [
                 "TSLA"
             ]
-        },
-        {
-            "name": "B",
-            "email": "b@b.com",
-            "stocks": []
         }
     ]
 }

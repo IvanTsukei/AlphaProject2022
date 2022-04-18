@@ -2,6 +2,8 @@ import tkinter as tk
 
 from backend.get_profile import get_profile
 
+### Main
+
 class ProfileWidget(tk.Frame):
     def __init__(self, parent, back_callback):
         tk.Frame.__init__(self, parent)
@@ -27,13 +29,3 @@ class ProfileWidget(tk.Frame):
             button.grid(row = i, column = 0)
             self.stock_buttons.append(button)
             i += 1
-
-
-
-
-
-
-
-
-
-

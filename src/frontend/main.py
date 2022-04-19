@@ -24,14 +24,13 @@ class App(tk.Tk):
         self.resizable(False, False) # Disables resizing
 
         self.plistWidget = ProfilesWidget(self, self.select_profile_callback)
-        self.plistWidget.grid(row = 0, column = 1) #show it.
-        self.grid_columnconfigure(0, minsize=230)
+        self.plistWidget.grid(rowspan = 16, column = 1) # Show it
 
         self.pWidget = ProfileWidget(self, self.back_callback)
 
     def clear_screen(self):
-        self.plistWidget.grid_forget()
-        self.pWidget.grid_forget()
+        self.plistWidget.grid_remove()
+        self.pWidget.grid_remove()
 
     def back_callback(self):
         self.clear_screen()

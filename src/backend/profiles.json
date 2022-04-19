@@ -16,6 +16,11 @@
             "stocks": [
                 "TSLA"
             ]
+        },
+        {
+            "name": "monke",
+            "email": "NA",
+            "stocks": []
         }
     ]
 }

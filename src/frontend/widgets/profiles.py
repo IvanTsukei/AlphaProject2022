@@ -17,7 +17,8 @@ class ProfilesWidget(tk.Frame):
     def __init__(self, parent, select_profile_callback):
         tk.Frame.__init__(self, parent)
         self.parent = parent
-        self.profile_buttons = []
+        self.configure(bg='#272c38')
+        self.grid_columnconfigure(0, minsize=230)
 
         ### Styling
 
@@ -35,19 +36,30 @@ class ProfilesWidget(tk.Frame):
                         )
 
 
-        profileCombo = ttk.Combobox(state = "readonly", font="Verdana 12 bold") # Initiates the dropdown
-        newProfile = tk.Text(height = 1, width = 22, padx=10, pady=10, foreground="white", bg='#5f5f5f', font="Verdana 12 bold", borderwidth=2) # Initiating the profile adding textbox
-        deleteProfile = tk.Text(height = 1, width = 22, padx=10, pady=10, foreground="white", bg='#5f5f5f', font="Verdana 12 bold", borderwidth=2) # Initiating the profile deleting textbox
+        profileCombo = ttk.Combobox(self, state = "readonly", font="Verdana 12 bold") # Initiates the dropdown
+        newProfile = tk.Text(self, height = 1, width = 22, padx=10, pady=10, foreground="white", bg='#5f5f5f', font="Verdana 12 bold", borderwidth=2) # Initiating the profile adding textbox
+        deleteProfile = tk.Text(self, height = 1, width = 22, padx=10, pady=10, foreground="white", bg='#5f5f5f', font="Verdana 12 bold", borderwidth=2) # Initiating the profile deleting textbox
+
+        # BG Image
+
+        # bgImage = Path(__file__).parent.resolve() / 'Images' / 'HomeBG.png'
+
+        # homeBGLoc = Image.open(bgImage)
+        # homeBG = ImageTk.PhotoImage(homeBGLoc)
+
+        # homeBGDiv = tk.Label(self, image = homeBG)
+        # homeBGDiv.image = homeBG
+        # homeBGDiv.grid(rowspan = 20, columnspan=1)
+        # self.create_image(0, 0, image=homeBG, anchor = 'nw') ### This doesn't actually work, keep it commented out. Just saw create_image as a possible solution
 
         # Title / Logo
 
-        def file_path():
-            return Path(__file__).parent.resolve() / 'Images' / 'LogoTitle.png'
+        titleImage = Path(__file__).parent.resolve() / 'Images' / 'LogoTitle.png'
 
-        titleLoc = Image.open(file_path())
+        titleLoc = Image.open(titleImage)
         titleBar = ImageTk.PhotoImage(titleLoc)
 
-        titleDiv = tk.Label(image = titleBar, bg = '#272c38')
+        titleDiv = tk.Label(self, image = titleBar, bg = '#272c38')
         titleDiv.image = titleBar
         titleDiv.grid(row = 0, column = 1, padx=10, pady=10)
 
@@ -58,7 +70,7 @@ class ProfilesWidget(tk.Frame):
         subtitleLoc = Image.open(selectionImage)
         subtitleBar = ImageTk.PhotoImage(subtitleLoc)
 
-        subtitleDiv = tk.Label(image = subtitleBar, bg = '#272c38')
+        subtitleDiv = tk.Label(self, image = subtitleBar, bg = '#272c38')
         subtitleDiv.image = subtitleBar
         subtitleDiv.grid(row = 1, column = 1, padx=10, pady=10)
 
@@ -69,7 +81,7 @@ class ProfilesWidget(tk.Frame):
         topdivlineLoc = Image.open(maindivImage)
         topdivLine = ImageTk.PhotoImage(topdivlineLoc)
 
-        topplacedDiv = tk.Label(image = topdivLine, bg = '#272c38')
+        topplacedDiv = tk.Label(self, image = topdivLine, bg = '#272c38')
         topplacedDiv.image = topdivLine
         topplacedDiv.grid(row = 16, column = 1, padx=10, pady=10)
 
@@ -80,13 +92,13 @@ class ProfilesWidget(tk.Frame):
         divlineLoc = Image.open(subdivImage)
         divLine = ImageTk.PhotoImage(divlineLoc)
 
-        firstplacedDiv, secondplacedDiv = tk.Label(image = divLine, bg = '#272c38'), tk.Label(image = divLine, bg = '#272c38') # Had to break it into two since I can't place the same image across multiple rows with one cmd.
+        firstplacedDiv, secondplacedDiv = tk.Label(self, image = divLine, bg = '#272c38'), tk.Label(self, image = divLine, bg = '#272c38') # Had to break it into two since I can't place the same image across multiple rows with one cmd.
         firstplacedDiv.image = divLine
         firstplacedDiv.grid(row = 6, column = 1, padx=10, pady=10)
         secondplacedDiv.grid(row = 11, column = 1, padx=10, pady=10)
         
 
-        # Listview Styling
+        # Listview Styling 
         self.option_add('*TCombobox*Listbox*Font', "Verdana 10")
         self.option_add('*TCombobox*Listbox*Background', bg)
         self.option_add('*TCombobox*Listbox*Foreground', "black")
@@ -105,7 +117,7 @@ class ProfilesWidget(tk.Frame):
 
         # Visual for loading profiles
         
-        profilesLabel = Label(text = 'Your Profiles', fg = 'white', bg = '#272c38', font="Verdana 12")
+        profilesLabel = Label(self, text = 'Your Profiles', fg = 'white', bg = '#272c38', font="Verdana 12")
         profilesLabel.grid(row = 4, column = 1)
 
         profileCombo.set('Select a Profile') # Sets default text
@@ -119,7 +131,7 @@ class ProfilesWidget(tk.Frame):
 
         def profile_check_callback(widget, cmd): # Handles outputting of error messages for adding a new profile and getting the input of the text box. Also handles deleting a profile to save on space.
             userInput = widget.get('1.0', 'end-1c')
-            invalidInput = Label(text = 'Done!', fg = 'green', bg = '#272c38', font="Verdana 10 italic")
+            invalidInput = Label(self, text = 'Done!', fg = 'green', bg = '#272c38', font="Verdana 10 italic")
 
             try:
                 if cmd == add_profile: # Lazy swap between add and delete
@@ -132,7 +144,7 @@ class ProfilesWidget(tk.Frame):
                 self.after(2000, clear_error, invalidInput)
 
             except ValueError as v:
-                invalidInput = Label(text = f'{v}', fg = 'red', bg = '#272c38', font="Verdana 10 italic") # Creates a label for the error 
+                invalidInput = Label(self, text = f'{v}', fg = 'red', bg = '#272c38', font="Verdana 10 italic") # Creates a label for the error 
                 if cmd == add_profile:
                     invalidInput.grid(row = 10, column = 1)
                 else:
@@ -141,9 +153,9 @@ class ProfilesWidget(tk.Frame):
 
         # Visual for adding profile
 
-        newprofileLabel = Label(text = 'Create a New Profile', fg = 'white', bg = '#272c38', font="Verdana 12")
+        newprofileLabel = Label(self, text = 'Create a New Profile', fg = 'white', bg = '#272c38', font="Verdana 12")
 
-        submitButton = tk.Button(text = 'Add Profile', fg = 'white', bg = '#6e819e', activebackground = '#50678a', font = fnt.Font(font = "Verdana 10"), command = lambda : profile_check_callback(newProfile,add_profile)) # lambda needed so function doesn't run as soon as main is run.
+        submitButton = tk.Button(self, text = 'Add Profile', fg = 'white', bg = '#6e819e', activebackground = '#50678a', font = fnt.Font(font = "Verdana 10"), command = lambda : profile_check_callback(newProfile,add_profile)) # lambda needed so function doesn't run as soon as main is run.
 
         newprofileLabel.grid(row = 7, column = 1)
         newProfile.grid(row = 8, column = 1, padx=10, pady=10)
@@ -151,8 +163,8 @@ class ProfilesWidget(tk.Frame):
 
         ### Deleting a Profile
 
-        deleteprofileLabel = Label(text = 'Delete a Profile', fg = 'white', bg = '#272c38', font="Verdana 12")
-        deletesubmitButton = tk.Button(text = 'Delete Profile', fg = 'white', bg = '#6e819e', activebackground = '#50678a', font = fnt.Font(font = "Verdana 10"), command = lambda : profile_check_callback(deleteProfile,delete_profile))
+        deleteprofileLabel = Label(self, text = 'Delete a Profile', fg = 'white', bg = '#272c38', font="Verdana 12")
+        deletesubmitButton = tk.Button(self, text = 'Delete Profile', fg = 'white', bg = '#6e819e', activebackground = '#50678a', font = fnt.Font(font = "Verdana 10"), command = lambda : profile_check_callback(deleteProfile,delete_profile))
 
         deleteprofileLabel.grid(row = 12, column = 1)
         deleteProfile.grid(row = 13, column = 1, padx=10, pady=10)

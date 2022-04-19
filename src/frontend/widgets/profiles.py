@@ -49,7 +49,7 @@ class ProfilesWidget(tk.Frame):
 
         # homeBGDiv = tk.Label(self, image = homeBG)
         # homeBGDiv.image = homeBG
-        # homeBGDiv.grid(rowspan = 20, columnspan=1)
+        # homeBGDiv.place(x=0, y=0, relwidth=1, relheight=1)
         # self.create_image(0, 0, image=homeBG, anchor = 'nw') ### This doesn't actually work, keep it commented out. Just saw create_image as a possible solution
 
         # Title / Logo
@@ -99,7 +99,7 @@ class ProfilesWidget(tk.Frame):
         
 
         # Listview Styling 
-        self.option_add('*TCombobox*Listbox*Font', "Verdana 10")
+        self.option_add('*TCombobox*Listbox*Font', "Verdana 10 bold")
         self.option_add('*TCombobox*Listbox*Background', bg)
         self.option_add('*TCombobox*Listbox*Foreground', "black")
         self.option_add('*TCombobox*Listbox*selectBackground', "#FFFFFF")

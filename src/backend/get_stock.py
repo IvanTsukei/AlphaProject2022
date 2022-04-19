@@ -197,5 +197,4 @@ def ticker_full_name(name):
 
 ### Testing Below
 
-stock_dividend_date('A')
-# stock_dividend_date('A')
+

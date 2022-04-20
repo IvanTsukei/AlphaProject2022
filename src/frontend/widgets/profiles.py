@@ -23,12 +23,14 @@ class ProfilesWidget(tk.Frame):
         self.grid_columnconfigure(0, minsize=303)
         self.grid_columnconfigure(1, minsize=286)
         self.grid_columnconfigure(2, minsize=311)
-        self.grid_rowconfigure(17, minsize=450)
+        self.grid_rowconfigure(19, minsize=450)
         self.grid_rowconfigure(1, minsize=210)
         self.grid_rowconfigure(6, minsize=30)
         self.grid_rowconfigure(8, minsize=36)
-        self.grid_rowconfigure(11, minsize=8)
-        self.grid_rowconfigure(13, minsize=50)
+        self.grid_rowconfigure(11, minsize=5)
+        self.grid_rowconfigure(12, minsize=20)
+        self.grid_rowconfigure(14, minsize=26)
+        self.grid_rowconfigure(17, minsize=10)
 
         ### Styling
 
@@ -37,18 +39,15 @@ class ProfilesWidget(tk.Frame):
         style = ttk.Style()
         style.theme_use("clam")
         style.configure('TCombobox',
-                        foreground = "black",
-                        darkcolor = bg,
-                        selectbackground = "#FFFFFF",
-                        lightcolor = bg,
-                        background = bg,
+                        foreground = "#2a2b2c",
+                        background = '#628ffa',
                         borderwidth = 2
                         )
 
 
         profileCombo = ttk.Combobox(self, state = "readonly", font="Verdana 12 bold") # Initiates the dropdown
         newProfile = tk.Text(self, height = 1, width = 22, padx=10, pady=10, foreground="#2a2b2c", bg='#628ffa', font="Verdana 12 bold", borderwidth=2) # Initiating the profile adding textbox
-        deleteProfile = tk.Text(self, height = 1, width = 22, padx=10, pady=10, foreground="white", bg='#5f5f5f', font="Verdana 12 bold", borderwidth=2) # Initiating the profile deleting textbox
+        deleteProfile = tk.Text(self, height = 1, width = 22, padx=10, pady=10, foreground="#2a2b2c", bg='#628ffa', font="Verdana 12 bold", borderwidth=2) # Initiating the profile deleting textbox
 
         # BG Image
 
@@ -134,7 +133,7 @@ class ProfilesWidget(tk.Frame):
                 if cmd == add_profile:
                     invalidInput.grid(row = 12, column = 1)
                 else:
-                    invalidInput.grid(row = 16, column = 1)
+                    invalidInput.grid(row = 18, column = 1)
                 self.after(2000, clear_error, invalidInput) # Callback to error removal. Removes after 2 sec
 
         # Visual for adding profile
@@ -153,5 +152,5 @@ class ProfilesWidget(tk.Frame):
         deletesubmitButton = tk.Button(self, text = 'Delete Profile', fg = 'white', bg = '#6e819e', activebackground = '#50678a', font = fnt.Font(font = "Verdana 10"), command = lambda : profile_check_callback(deleteProfile,delete_profile))
 
         # deleteprofileLabel.grid(row = 12, column = 1)
-        deleteProfile.grid(row = 14, column = 1, padx=10, pady=10)
-        deletesubmitButton.grid(row = 15, column = 1)
+        deleteProfile.grid(row = 15, column = 1, padx=10, pady=10)
+        deletesubmitButton.grid(row = 16, column = 1)

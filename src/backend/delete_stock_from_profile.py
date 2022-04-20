@@ -13,7 +13,7 @@ def delete_stock(name, stock):
 
     def stock_exists(stock):
         existing = data['profiles'][profile_index(name)]['stocks']
-        if stock not in existing:
+        if stock.upper() not in existing:
             raise ValueError ("This Ticker is not in the Profile.")
 
 
@@ -27,7 +27,7 @@ def delete_stock(name, stock):
         return False
 
     else:
-        data['profiles'][profile_index(name)]['stocks'].remove(stock)
+        data['profiles'][profile_index(name)]['stocks'].remove(stock.upper())
 
     storage.write_data(data)
     return True

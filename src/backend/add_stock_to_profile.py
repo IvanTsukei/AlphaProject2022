@@ -1,5 +1,6 @@
 import backend.storage as storage
 import yfinance as yf
+import pandas_datareader.data as web
 from backend.get_profile import profile_index
 from backend.get_profile import get_profile
 
@@ -13,12 +14,15 @@ def add_stock(name, stock):
     
     def invalid_stock_input(stock):
         ticker = yf.Ticker(stock)
-        if (ticker.info['regularMarketOpen'] == None):
-            raise ValueError ("Please enter a valid stock ticker.")
+
+        try:
+            ticker.info['forwardPE']
+        except KeyError:
+            raise ValueError ("Not a valid stock ticker.")
 
     def stock_exists(stock):
         existing = data['profiles'][profile_index(name)]['stocks']
-        if stock in existing:
+        if stock.upper() in existing:
             raise ValueError ("This Ticker is already in this profile.")
 
     if invalid_stock_input(stock):
@@ -35,7 +39,7 @@ def add_stock(name, stock):
         return False
 
     else:
-        data['profiles'][profile_index(name)]['stocks'].append(stock)
+        data['profiles'][profile_index(name)]['stocks'].append(stock.upper())
 
     storage.write_data(data)
     return True

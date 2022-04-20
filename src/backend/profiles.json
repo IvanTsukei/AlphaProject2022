@@ -14,7 +14,8 @@
             "name": "test",
             "email": "test@test.com",
             "stocks": [
-                "TSLA"
+                "TSLA",
+                "MSFT"
             ]
         },
         {

@@ -2,7 +2,7 @@ import pandas as pd
 import datetime as dt
 import pandas_datareader.data as web
 import numpy as np
-from datetime import datetime
+from datetime import date
 from scipy import stats
 import seaborn as sns
 import yfinance as yf
@@ -40,6 +40,14 @@ def stock_list(name):
     existing = data['profiles'][profile_index(name)]['stocks']
     return existing
 
+def easy_read_format(value):
+    num = float('{:.3g}'.format(value))
+    size = 0
+    while abs(num) >= 1000:
+        size += 1
+        num /= 1000.0
+    return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'), ['', 'K', 'M', 'B', 'T'][size])
+
 ### Functions
 
 def stock_basic_history(name, starting, ending):
@@ -76,24 +84,31 @@ def stock_dividend_date(name): # Broken, needs fixing
         print(div_date)
                             
 
-def stock_marketcap(name):
-    existing = data['profiles'][profile_index(name)]['stocks']
+def stock_marketcap(stock):
+    # existing = data['profiles'][profile_index(name)]['stocks']
 
-    if get_profile(name) == "Please enter a valid profile name.":
-        print(get_profile(name))
-    else:
-        market_cap = web.get_quote_yahoo(existing)['marketCap']
-        print(market_cap)
+    # if get_profile(name) == "Please enter a valid profile name.":
+    #     print(get_profile(name))
+    # else:
+    # market_cap = web.get_quote_yahoo(stock)['marketCap']
+    # return market_cap
+    info = yf.Ticker(stock).info
+    market_cap = info['marketCap']
+
+    return (f'${easy_read_format(market_cap)}')
 
 
-def stock_pe(name):
-    existing = data['profiles'][profile_index(name)]['stocks']
+def stock_pe(stock):
+    # existing = data['profiles'][profile_index(name)]['stocks']
 
-    if get_profile(name) == "Please enter a valid profile name.":
-        print(get_profile(name))
-    else:
-        price_earnings = web.get_quote_yahoo(existing)['trailingPE']
-        return price_earnings
+    # if get_profile(name) == "Please enter a valid profile name.":
+    #     print(get_profile(name))
+    # else:
+    # price_earnings = web.get_quote_yahoo(stock)['trailingPE']
+    # return price_earnings
+    info = yf.Ticker(stock).info
+    price_earnings = info['trailingPE']
+    return (f'{price_earnings:.3f}')
 
 
 def portfolio_daily_returns(name, starting, ending): # % change
@@ -108,20 +123,20 @@ def portfolio_daily_returns(name, starting, ending): # % change
         return returns
 
 
-def stock_industry(name):
-    existing = data['profiles'][profile_index(name)]['stocks']
+def stock_industry(stock):
+    # existing = data['profiles'][profile_index(name)]['stocks']
 
-    if get_profile(name) == "Please enter a valid profile name.":
-        print(get_profile(name))
-    else:
-        df = pd.DataFrame()
+    # if get_profile(name) == "Please enter a valid profile name.":
+    #     print(get_profile(name))
+    # else:
+    #     df = pd.DataFrame()
 
-        for stock in existing:
-            info = yf.Ticker(stock).info
-            industry = info['industry']
-            df = df.append({'Industry':industry}, ignore_index=True)
+        # for stock in existing:
+    info = yf.Ticker(stock).info
+    industry = info['industry']
+            # df = df.append({'Industry':industry}, ignore_index=True)
 
-        return df
+    return industry
 
 def portfolio_beta(name):
     existing = data['profiles'][profile_index(name)]['stocks']
@@ -145,16 +160,16 @@ def portfolio_beta(name):
         return (sum(weighted_beta))
 
 
-def stock_volume(name, starting, ending):
-    existing = data['profiles'][profile_index(name)]['stocks']
+def stock_volume(stock):
+    # existing = data['profiles'][profile_index(name)]['stocks']
+    
 
-    if get_profile(name) == "Please enter a valid profile name.":
-        print(get_profile(name))
-    else:
-        price_data = web.DataReader(existing, 'yahoo', starting, ending)
-        volume = price_data['Volume'].pct_change()
-        volume.dropna(inplace = True)
-        print(volume)
+    # if get_profile(name) == "Please enter a valid profile name.":
+    #     print(get_profile(name))
+    # else:
+    info = yf.Ticker(stock).info
+    volume = info['averageVolume']
+    return easy_read_format(volume)
 
 
 ### Calculation Functions
@@ -176,24 +191,54 @@ def portfolio_extected_return(name, starting, ending):
 
 ### Misc. Helper Functions
 
-def ticker_region(name):
-    existing = data['profiles'][profile_index(name)]['stocks']
+def ticker_high(stock):
+    # existing = data['profiles'][profile_index(name)]['stocks']
 
-    if get_profile(name) == "Please enter a valid profile name.":
-        print(get_profile(name))
+    # if get_profile(name) == "Please enter a valid profile name.":
+    #     print(get_profile(name))
+    # else:
+    info = yf.Ticker(stock).info
+    high = info['fiftyTwoWeekHigh']
+    return (f'${high}')
+
+def ticker_price(stock):
+    # existing = data['profiles'][profile_index(name)]['stocks']
+
+    # if get_profile(name) == "Please enter a valid profile name.":
+    #     print(get_profile(name))
+    # else:
+    info = yf.Ticker(stock).info
+    price = info['regularMarketPrice']
+    return (f'${price}')
+    
+
+
+def ticker_full_name(stock):
+    # existing = data['profiles'][profile_index(name)]['stocks']
+
+    # if get_profile(name) == "Please enter a valid profile name.":
+    #     print(get_profile(name))
+    # else:
+    # fullname = web.get_quote_yahoo(stock)['longName']
+    # return fullname
+    info = yf.Ticker(stock).info
+    fullname = info['longName']
+    return fullname[:15]
+
+def dividend_rate(stock):
+    # existing = data['profiles'][profile_index(name)]['stocks']
+
+    # if get_profile(name) == "Please enter a valid profile name.":
+    #     print(get_profile(name))
+    # else:
+    # fullname = web.get_quote_yahoo(stock)['longName']
+    # return fullname
+    info = yf.Ticker(stock).info
+    dividendRate = info['dividendRate']
+    if dividendRate != None:
+        return dividendRate
     else:
-        region= web.get_quote_yahoo(existing)['region']
-        print(region)
-
-
-def ticker_full_name(name):
-    existing = data['profiles'][profile_index(name)]['stocks']
-
-    if get_profile(name) == "Please enter a valid profile name.":
-        print(get_profile(name))
-    else:
-        region= web.get_quote_yahoo(existing)['longName']
-        print(region)
+        return "-NA-"
 
 ### Testing Below
 

@@ -38,11 +38,12 @@ class ProfileWidget(tk.Frame):
 
         ### CLEARING OUT OLD INFO
 
-        allwidgetLabels = ['self.addstockLabel', 'self.addprofileLabel']
+        if (hasattr(self, 'addstockLabel')): # Clears the empty list label
+            self.addstockLabel.destroy()
+        
+        if (hasattr(self, 'addprofileLabel')): # Clears the empty list label
+            self.addprofileLabel.destroy()
 
-        for i in allwidgetLabels: # Saving space
-            if (hasattr(self, i)): # Clears the empty list label
-                i.destroy()
 
         ### Can't figure out out to get to the labels within the function, global isn't working, so this awful workaround will have to do for now.
         def clear_basic_info(self):

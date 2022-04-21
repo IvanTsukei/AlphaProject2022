@@ -1,2 +1,9 @@
 matplotlib
 yfinance
+tkinter
+PIL
+pathlib
+functools
+pandas_datareader.data
+numpy
+pandas

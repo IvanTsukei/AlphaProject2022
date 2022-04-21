@@ -136,7 +136,7 @@ def stock_industry(stock):
     industry = info['industry']
             # df = df.append({'Industry':industry}, ignore_index=True)
 
-    return industry
+    return industry[:15]
 
 def portfolio_beta(name):
     existing = data['profiles'][profile_index(name)]['stocks']

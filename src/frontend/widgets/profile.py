@@ -5,6 +5,7 @@ from PIL import ImageTk, Image
 from tkinter.messagebox import showerror
 import tkinter.font as fnt
 from pathlib import Path
+from functools import partial
 
 from backend.get_profile import get_profile
 from backend.add_stock_to_profile import add_stock
@@ -37,49 +38,62 @@ class ProfileWidget(tk.Frame):
 
         ### CLEARING OUT OLD INFO
 
-        if (hasattr(self, 'addstockLabel')): # Clears the empty list label
-            self.addstockLabel.destroy()
-        
-        if (hasattr(self, 'addprofileLabel')): # Clears the profile name label
-            self.addprofileLabel.destroy()
+        allwidgetLabels = ['self.addstockLabel', 'self.addprofileLabel']
 
-        if (hasattr(self, 'markepcapLabel')): # Clears the empty list label
-            self.markepcapLabel.destroy()
+        for i in allwidgetLabels: # Saving space
+            if (hasattr(self, i)): # Clears the empty list label
+                i.destroy()
 
-        if (hasattr(self, 'peLabel')): # Clears the empty list label
-            self.peLabel.destroy()
+        ### Can't figure out out to get to the labels within the function, global isn't working, so this awful workaround will have to do for now.
+        def clear_basic_info(self):
 
-        if (hasattr(self, 'industryLabel')): # Clears the empty list label
-            self.industryLabel.destroy()
+            ### Clearing Previous Info
 
-        if (hasattr(self, 'volumeLabel')): # Clears the empty list label
-            self.volumeLabel.destroy()
+            allLabels = ['self.markepcapLabel', 'self.peLabel', 'self.industryLabel', 'self.volumeLabel', 'self.highLabel', 'self.fullnameLabel', 'self.divRateLabel', 'self.priceLabel']
+
+            for i in allLabels: # Saving space
+                if (hasattr(self, i)): # Clears the empty list label
+                    self.i.destroy()
+                
+            ### Function Values
+
+            ### The Labels
+
+            self.markepcapLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.peLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.industryLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.volumeLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.highLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.fullnameLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.divRateLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.priceLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
+
+            ### Plotting the labels
+
+            self.fullnameLabel.grid(row = 5, column = 1, padx=5, pady=5, sticky = 'w')
+            self.industryLabel.grid(row = 6, column = 1, padx=5, pady=5, sticky = 'w')
+            self.priceLabel.grid(row = 7, column = 1, padx=5, pady=5, sticky = 'w')
+            self.highLabel.grid(row = 8, column = 1, padx=5, pady=5, sticky = 'w')
+            self.markepcapLabel.grid(row = 9, column = 1, padx=5, pady=5, sticky = 'w')
+            self.volumeLabel.grid(row = 10, column = 1, padx=5, pady=5, sticky = 'w')
+            self.peLabel.grid(row = 11, column = 1, padx=5, pady=5, sticky = 'w')
+            self.divRateLabel.grid(row = 12, column = 1, padx=5, pady=5, sticky = 'w')
         
-        if (hasattr(self, 'highLabel')): # Clears the empty list label
-            self.highLabel.destroy()
-        
-        if (hasattr(self, 'fullnameLabel')): # Clears the empty list label
-            self.fullnameLabel.destroy()
-        
-        if (hasattr(self, 'divRateLabel')): # Clears the empty list label
-            self.divRateLabel.destroy()
-        
-        if (hasattr(self, 'priceLabel')): # Clears the empty list label
-            self.priceLabel.destroy()
+        clear_basic_info(self)
 
         ### Showing Profile Name in Top Right
 
         self.addprofileLabel = Label(self, text = f'Profile: {profileName}', fg = 'white', bg = '#242c3b', font="Verdana 11 italic")
         self.addprofileLabel.grid(row = 0, column = 3, sticky = "ne", pady=2)
 
-        ### Styling
+        ### Entry Methods
 
         newStock = tk.Text(self, height = 1, width = 22, padx=10, pady=10, foreground="#2a2b2c", bg='#628ffa', font="Verdana 12 bold", borderwidth=2) # Initiating the stock adding textbox
         deleteStock = tk.Text(self, height = 1, width = 22, padx=10, pady=10, foreground="#2a2b2c", bg='#628ffa', font="Verdana 12 bold", borderwidth=2) # Initiating the stock deleting textbox
         graphButton = tk.Button(self, text = 'Start Portfolio Analysis', fg = 'white', bg = '#6e819e', activebackground = '#50678a', font = fnt.Font(font = "Verdana 10"))
         
 
-        # BG Image
+        ### BG Image
 
         bgImage = Path(__file__).parent.resolve() / 'Images' / 'ProfileBG.png'
 
@@ -92,22 +106,7 @@ class ProfileWidget(tk.Frame):
         homeBGDiv.lower()
 
 
-        # Diving Line Widgets
-
-        subdivImage = Path(__file__).parent.resolve() / 'Images' / 'DividingLine.png'
-
-        divlineLoc = Image.open(subdivImage)
-        divLine = ImageTk.PhotoImage(divlineLoc)
-
-        firstplacedDiv= tk.Label(self, image = divLine, bg = '#1f2631')
-        firstplacedDiv.image = divLine
-        # firstplacedDiv.grid(row = 4, column = 2, padx = 5, pady = 5)
-
-
-        # stocksectionLabel = Label(self, text = 'Stocks in Profile', fg = 'white', bg = '#1f2631', font="Verdana 12")
-        # stocksectionLabel.grid(row = 3, column = 2, padx=5, pady=5)
-
-        # Main Div
+        ### Diving Line Widgets
 
         maindivImage = Path(__file__).parent.resolve() / 'Images' / 'MiscPinkDiv.png'
 
@@ -115,39 +114,21 @@ class ProfileWidget(tk.Frame):
         topdivLine = ImageTk.PhotoImage(topdivlineLoc)
 
         topplacedDiv = tk.Label(self, image = topdivLine, bg = '#1f2631')
-        topplacedDiv.image = topdivLine
+        topplacedDiv.image = topdivLine # Saving the ref
         topplacedDiv.place(x = 610, y = 424)
 
-        ### Adding a stock
+        ### Adding all stocks in profile
 
         ## Individual stock info
-        def stocks_basic_info(stock):
+        def stocks_basic_info(self, stock):
 
             ### Clearing Previous Info
 
-            if (hasattr(self, 'markepcapLabel')): # Clears the empty list label
-                self.markepcapLabel.destroy()
+            allLabels = ['self.markepcapLabel', 'self.peLabel', 'self.industryLabel', 'self.volumeLabel', 'self.highLabel', 'self.fullnameLabel', 'self.divRateLabel', 'self.priceLabel']
 
-            if (hasattr(self, 'peLabel')): # Clears the empty list label
-                self.peLabel.destroy()
-
-            if (hasattr(self, 'industryLabel')): # Clears the empty list label
-                self.industryLabel.destroy()
-
-            if (hasattr(self, 'volumeLabel')): # Clears the empty list label
-                self.volumeLabel.destroy()
-            
-            if (hasattr(self, 'highLabel')): # Clears the empty list label
-                self.highLabel.destroy()
-            
-            if (hasattr(self, 'fullnameLabel')): # Clears the empty list label
-                self.fullnameLabel.destroy()
-            
-            if (hasattr(self, 'divRateLabel')): # Clears the empty list label
-                self.divRateLabel.destroy()
-            
-            if (hasattr(self, 'priceLabel')): # Clears the empty list label
-                self.priceLabel.destroy()
+            for i in allLabels: # Saving space
+                if (hasattr(self, i)): # Clears the empty list label
+                    i.destroy()
                 
             ### Function Values
 
@@ -160,39 +141,25 @@ class ProfileWidget(tk.Frame):
             divRate = dividend_rate(stock)
             price = ticker_price(stock)
 
-            ### The Labels
-
-            global markepcapLabel
-            global peLabel
-            global industryLabel
-            global volumeLabel
-            global highLabel
-            global fullnameLabel
-            global divRateLabel
-            global priceLabel
-
-            markepcapLabel = Label(self, text = f'{marketCap}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            peLabel = Label(self, text = f'{pe}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            industryLabel = Label(self, text = f'{industry}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            volumeLabel = Label(self, text = f'{volume}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            highLabel = Label(self, text = f'{high}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            fullnameLabel = Label(self, text = f'{fullName}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            divRateLabel = Label(self, text = f'{divRate}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            priceLabel = Label(self, text = f'{price}', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.markepcapLabel = Label(self, text = f'{marketCap}', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.peLabel = Label(self, text = f'{pe}', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.industryLabel = Label(self, text = f'{industry}', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.volumeLabel = Label(self, text = f'{volume}', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.highLabel = Label(self, text = f'{high}', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.fullnameLabel = Label(self, text = f'{fullName}', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.divRateLabel = Label(self, text = f'{divRate}', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.priceLabel = Label(self, text = f'{price}', fg = 'white', bg = '#1f2631', font="Verdana 11")
 
             ### Plotting the labels
 
-            fullnameLabel.grid(row = 5, column = 1, padx=5, pady=5, sticky = 'w')
-            industryLabel.grid(row = 6, column = 1, padx=5, pady=5, sticky = 'w')
-            priceLabel.grid(row = 7, column = 1, padx=5, pady=5, sticky = 'w')
-            highLabel.grid(row = 8, column = 1, padx=5, pady=5, sticky = 'w')
-            markepcapLabel.grid(row = 9, column = 1, padx=5, pady=5, sticky = 'w')
-            volumeLabel.grid(row = 10, column = 1, padx=5, pady=5, sticky = 'w')
-            peLabel.grid(row = 11, column = 1, padx=5, pady=5, sticky = 'w')
-            divRateLabel.grid(row = 12, column = 1, padx=5, pady=5, sticky = 'w')
-
-
-
+            self.fullnameLabel.grid(row = 5, column = 1, padx=5, pady=5, sticky = 'w')
+            self.industryLabel.grid(row = 6, column = 1, padx=5, pady=5, sticky = 'w')
+            self.priceLabel.grid(row = 7, column = 1, padx=5, pady=5, sticky = 'w')
+            self.highLabel.grid(row = 8, column = 1, padx=5, pady=5, sticky = 'w')
+            self.markepcapLabel.grid(row = 9, column = 1, padx=5, pady=5, sticky = 'w')
+            self.volumeLabel.grid(row = 10, column = 1, padx=5, pady=5, sticky = 'w')
+            self.peLabel.grid(row = 11, column = 1, padx=5, pady=5, sticky = 'w')
+            self.divRateLabel.grid(row = 12, column = 1, padx=5, pady=5, sticky = 'w')
 
         
         ### Individual Stocks
@@ -203,8 +170,8 @@ class ProfileWidget(tk.Frame):
 
         i = 4
         for stock in profile['stocks']:
-            button = tk.Button(self, text=stock,  fg = 'white', bg = '#6390fa', activebackground = '#30467b', font = fnt.Font(font = "Verdana 10"), command = lambda : stocks_basic_info(stock)) #ToDo: Add command and callback.
-            i += 1
+            button = tk.Button(self, text=stock,  fg = 'white', bg = '#6390fa', activebackground = '#30467b', font = fnt.Font(font = "Verdana 10"), command=lambda stock=stock:stocks_basic_info(self, stock)) # FINALLY got the button click to register the ticker name...
+            i += 1 # Next row
             button.grid(row = i, column = 2, padx=5, pady=5)
             self.stock_buttons.append(button)
 
@@ -213,7 +180,7 @@ class ProfileWidget(tk.Frame):
             self.addstockLabel.grid(row = 5, column = 2, padx=5, pady=5)
 
 
-        ### Adding a stock
+        ### Adding a new stock to profile
 
         def clear_error(value): # Removes error message.
             value.destroy()

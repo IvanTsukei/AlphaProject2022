@@ -50,7 +50,7 @@ def easy_read_format(value):
 
 ### Functions
 
-def stock_basic_history(name, starting, ending):
+async def stock_basic_history(name, starting, ending):
     existing = data['profiles'][profile_index(name)]['stocks']
 
     if get_profile(name) == "Please enter a valid profile name.":
@@ -84,7 +84,7 @@ def stock_dividend_date(name): # Broken, needs fixing
         print(div_date)
                             
 
-def stock_marketcap(stock):
+async def stock_marketcap(stock):
     # existing = data['profiles'][profile_index(name)]['stocks']
 
     # if get_profile(name) == "Please enter a valid profile name.":
@@ -98,7 +98,7 @@ def stock_marketcap(stock):
     return (f'${easy_read_format(market_cap)}')
 
 
-def stock_pe(stock):
+async def stock_pe(stock):
     # existing = data['profiles'][profile_index(name)]['stocks']
 
     # if get_profile(name) == "Please enter a valid profile name.":
@@ -123,7 +123,7 @@ def portfolio_daily_returns(name, starting, ending): # % change
         return returns
 
 
-def stock_industry(stock):
+async def stock_industry(stock):
     # existing = data['profiles'][profile_index(name)]['stocks']
 
     # if get_profile(name) == "Please enter a valid profile name.":
@@ -160,7 +160,7 @@ def portfolio_beta(name):
         return (sum(weighted_beta))
 
 
-def stock_volume(stock):
+async def stock_volume(stock):
     # existing = data['profiles'][profile_index(name)]['stocks']
     
 
@@ -191,7 +191,7 @@ def portfolio_extected_return(name, starting, ending):
 
 ### Misc. Helper Functions
 
-def ticker_high(stock):
+async def ticker_high(stock):
     # existing = data['profiles'][profile_index(name)]['stocks']
 
     # if get_profile(name) == "Please enter a valid profile name.":
@@ -201,7 +201,7 @@ def ticker_high(stock):
     high = info['fiftyTwoWeekHigh']
     return (f'${high}')
 
-def ticker_price(stock):
+async def ticker_price(stock):
     # existing = data['profiles'][profile_index(name)]['stocks']
 
     # if get_profile(name) == "Please enter a valid profile name.":
@@ -213,7 +213,7 @@ def ticker_price(stock):
     
 
 
-def ticker_full_name(stock):
+async def ticker_full_name(stock):
     # existing = data['profiles'][profile_index(name)]['stocks']
 
     # if get_profile(name) == "Please enter a valid profile name.":
@@ -225,7 +225,7 @@ def ticker_full_name(stock):
     fullname = info['longName']
     return fullname[:15]
 
-def dividend_rate(stock):
+async def dividend_rate(stock):
     # existing = data['profiles'][profile_index(name)]['stocks']
 
     # if get_profile(name) == "Please enter a valid profile name.":

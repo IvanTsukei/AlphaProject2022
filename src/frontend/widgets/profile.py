@@ -20,7 +20,9 @@ class ProfileWidget(tk.Frame):
         self.parent = parent
 
         self.back_button = tk.Button(self, text="Back", fg = 'white', bg = '#6e819e', activebackground = '#50678a', font = fnt.Font(font = "Verdana 10"), command = back_callback)
+        self.reload_button = tk.Button(self, text="Reload", fg = 'white', bg = '#6e819e', activebackground = '#50678a', font = fnt.Font(font = "Verdana 10"), command = self.reload)
         self.back_button.grid(row = 0, column = 0, sticky = "nw")
+        self.reload_button.grid(row = 0, column = 1, sticky = "nw")
         self.configure(bg='#272c38')
         self.grid_columnconfigure(0, minsize=133)
         self.grid_columnconfigure(1, minsize=200)
@@ -31,10 +33,14 @@ class ProfileWidget(tk.Frame):
 
         self.stock_buttons = []
 
+    def reload(self):
+        self.show(self.profileName)
+
 
     def show(self, profile_name):
         profile = get_profile(profile_name)
         profileName = profile['name'] # Needed to get the actual profile name
+        self.profileName = profileName
 
         ### CLEARING OUT OLD INFO
 
@@ -60,14 +66,15 @@ class ProfileWidget(tk.Frame):
 
             ### The Labels
 
-            self.markepcapLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.peLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.industryLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.volumeLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.highLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.fullnameLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.divRateLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.priceLabel = Label(self, text = '                                ', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            text_empty = '                                  '
+            self.markepcapLabel = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.peLabel        = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.industryLabel  = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.volumeLabel    = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.highLabel      = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.fullnameLabel  = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.divRateLabel   = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.priceLabel     = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
 
             ### Plotting the labels
 
@@ -133,14 +140,23 @@ class ProfileWidget(tk.Frame):
                 
             ### Function Values
 
+            print(1)
             marketCap = stock_marketcap(stock)
+            print(2)
             pe = stock_pe(stock)
+            print(3)
             industry = stock_industry(stock)
+            print(4)
             volume = stock_volume(stock)
+            print(5)
             high = ticker_high(stock)
+            print(6)
             fullName = ticker_full_name(stock)
+            print(7)
             divRate = dividend_rate(stock)
+            print(8)
             price = ticker_price(stock)
+            print(9)
 
             self.markepcapLabel = Label(self, text = f'{marketCap}', fg = 'white', bg = '#1f2631', font="Verdana 11")
             self.peLabel = Label(self, text = f'{pe}', fg = 'white', bg = '#1f2631', font="Verdana 11")

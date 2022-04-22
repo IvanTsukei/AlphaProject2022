@@ -7,8 +7,7 @@
                 "MSFT",
                 "AAPL",
                 "TSLA",
-                "PYPL",
-                "SSNLF"
+                "PYPL"
             ]
         },
         {
@@ -27,7 +26,9 @@
         {
             "name": "hello there",
             "email": "NA",
-            "stocks": []
+            "stocks": [
+                "GME"
+            ]
         }
     ]
 }

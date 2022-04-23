@@ -13,11 +13,13 @@ def add_stock(name, stock):
     ### Checking if stock ticker is valid.
     
     def invalid_stock_input(stock):
-        ticker = yf.Ticker(stock)
+
+        if stock == "":
+            raise ValueError ("Not a valid stock ticker.")
 
         try:
-            ticker.info['forwardPE']
-        except KeyError:
+            int(web.get_quote_yahoo(stock)['marketCap'])
+        except IndexError:
             raise ValueError ("Not a valid stock ticker.")
 
     def stock_exists(stock):

@@ -37,13 +37,6 @@ def stock_list(name):
     existing = data['profiles'][profile_index(name)]['stocks']
     return existing
 
-def easy_read_format(value):
-    num = float('{:.3g}'.format(value))
-    size = 0
-    while abs(num) >= 1000:
-        size += 1
-        num /= 1000.0
-    return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'), ['', 'K', 'M', 'B', 'T'][size])
 
 ### Functions
 
@@ -69,36 +62,7 @@ def portfolio_dividends(name, starting, ending):
                 print(f'{stock} has no dividends for this time period.')
             else:
                 print(dividends.head())
-
-
-def stock_dividend_date(name): # Broken, needs fixing
-    existing = data['profiles'][profile_index(name)]['stocks']
-
-    if get_profile(name) == "Please enter a valid profile name.":
-        print(get_profile(name))
-    else:
-        div_date = web.get_quote_yahoo(existing)['dividendDate']
-        print(div_date)
                             
-
-def stock_marketcap(stock):
-    info = yf.Ticker(stock).info
-
-    try:
-        market_cap = info['marketCap']
-        return (f'${easy_read_format(market_cap)}')
-    except KeyError:
-        return ('-NA-')
-
-
-def stock_pe(stock):
-    info = yf.Ticker(stock).info
-    try:
-        price_earnings = info['trailingPE']
-        return (f'{price_earnings:.3f}')
-    except KeyError:
-        return ('-NA-')
-
 
 def portfolio_daily_returns(name, starting, ending): # % change
     existing = data['profiles'][profile_index(name)]['stocks']
@@ -110,12 +74,6 @@ def portfolio_daily_returns(name, starting, ending): # % change
         returns = returns_data.pct_change()
         returns.dropna(inplace = True)
         return returns
-
-
-def stock_industry(stock):
-    info = yf.Ticker(stock).info
-    industry = info['industry']
-    return (industry[:13] + '...')
 
 
 def portfolio_beta(name):
@@ -140,17 +98,6 @@ def portfolio_beta(name):
         res = (sum(weighted_beta))
         return (f'{res:.4f}')
 
-
-def stock_volume(stock):
-    info = yf.Ticker(stock).info
-
-    try:
-        volume = info['averageVolume']
-        return easy_read_format(volume)
-    except KeyError:
-        return ('-NA-')
-
-
 ### Calculation Functions
 
 def portfolio_extected_return(name, starting, ending):
@@ -167,61 +114,39 @@ def portfolio_extected_return(name, starting, ending):
         portfolio_annual_return = returns['Portfolio'].mean()*250
         print('Portfolio annual expected return is ' + str(np.round(portfolio_annual_return,2)*100)+'%')
 
-
-### Misc. Helper Functions
-
-def ticker_high(stock):
-    info = yf.Ticker(stock).info
-
-    try:
-        high = info['fiftyTwoWeekHigh']
-        return (f'${high}')
-    except KeyError:
-        return ('-NA-')
-
-
-def ticker_price(stock):
-    info = yf.Ticker(stock).info
-
-    try:
-        price = info['regularMarketPrice']
-        return (f'${price:.2f}')
-    except KeyError:
-        return ('-NA-')
-    
-
-def ticker_full_name(stock):
-    info = yf.Ticker(stock).info
-
-    try:
-        fullname = info['longName']
-        return fullname[:15]
-    except KeyError:
-        return ('-NA-')
-
-
-def dividend_rate(stock):
-    info = yf.Ticker(stock).info
-    dividendRate = info['dividendRate']
-    
-    if dividendRate != None:
-        return dividendRate
-    else:
-        return "-NA-"
-
 ###################################################################
 
 def all_basic_stock_info(ticker):
 
     today = date.today()
-    yesterday = today - timedelta(days = 180)
+    yesterday = today - timedelta(days = 180) # In case this is run between 12am and 9:30am of the following day
 
-    df = web.DataReader(ticker, 'yahoo', today)
-    df['fiftyTwoHigh'] = float(web.get_quote_yahoo(ticker)['fiftyTwoWeekHigh'])
-    df['longName'] = str(web.get_quote_yahoo(ticker)['longName'])
-    df['trailingPE'] = float(web.get_quote_yahoo(ticker)['trailingPE'])
-    df['marketCap'] = int(web.get_quote_yahoo(ticker)['marketCap'])
-    df['divAmount'] = web.DataReader('IBM', 'yahoo-dividends', yesterday, today).iat[1,1]
+    df = web.DataReader(ticker, 'yahoo',yesterday, today)
+
+    try:
+        df['fiftyTwoHigh'] = float(web.get_quote_yahoo(ticker)['fiftyTwoWeekHigh'])
+    except KeyError:
+        df['fiftyTwoHigh'] = ('-NA-')
+    
+    try:
+        df['longName'] = str(web.get_quote_yahoo(ticker)['longName'])
+    except KeyError:
+        df['longName'] = ('-NA-')
+    
+    try:
+        df['trailingPE'] = float(web.get_quote_yahoo(ticker)['trailingPE'])
+    except KeyError:
+        df['trailingPE'] = ('-NA-')
+    
+    try:
+        df['marketCap'] = int(web.get_quote_yahoo(ticker)['marketCap'])
+    except KeyError:
+        df['marketCap'] =  ('-NA-')
+
+    try:
+        df['divAmount'] = web.DataReader('IBM', 'yahoo-dividends', yesterday, today).iat[1,1]
+    except KeyError:
+        df['divAmount'] = ('-NA-')
 
     df.drop(['Low', 'Adj Close'], axis=1, inplace=True)
 

@@ -8,7 +8,7 @@ import pandas_datareader.data as web
 from backend.get_profile import get_profile
 from backend.add_stock_to_profile import add_stock
 from backend.delete_stock_from_profile import delete_stock
-from backend.get_stock import all_basic_stock_info, stock_marketcap, stock_pe, stock_industry, stock_volume, ticker_high, ticker_full_name, dividend_rate, ticker_price, portfolio_beta
+from backend.get_stock import all_basic_stock_info
 
 ### Main
 
@@ -132,6 +132,8 @@ class ProfileWidget(tk.Frame):
         ### Adding all stocks in profile
 
         def easy_read_format(value):
+            if value == "-NA-":
+                return "-NA-"
             num = float('{:.3g}'.format(value))
             size = 0
             while abs(num) >= 1000:
@@ -144,7 +146,7 @@ class ProfileWidget(tk.Frame):
 
             ### Clearing Previous Info
 
-            allLabels = ['self.markepcapLabel', 'self.peLabel', 'self.industryLabel', 'self.volumeLabel', 'self.highLabel', 'self.fullnameLabel', 'self.divRateLabel', 'self.priceLabel']
+            allLabels = ['self.markepcapLabel', 'self.peLabel', 'self.fiftytwoHighLabel', 'self.volumeLabel', 'self.highLabel', 'self.fullnameLabel', 'self.divRateLabel', 'self.priceLabel']
 
             for i in allLabels: # Saving space
                 if (hasattr(self, i)): # Clears the empty list label
@@ -152,39 +154,61 @@ class ProfileWidget(tk.Frame):
                 
             ### Function Values
 
-            df = all_basic_stock_info(stock)
-            # print(df)
-
+            df = all_basic_stock_info(stock) # SO much faster than using yfinance and doing a query on each key
+            
             marketCap = easy_read_format(df.iat[0,7])
-            pe = f'{df.iat[0,6]:.3f}'
-            # industry = df.iat[7,0]
             volume = easy_read_format(df.iat[0,3])
-            high = f'{df.iat[0,0]:.2f}'
-            # fiftytwoHigh = f'{df.iat[4,0]:.2f}'
-            # firstfullName = df.iat[0,5]
-            divRate = f'${df.iat[0,8]:.2f}'
-            price = f'${df.iat[0,1]:.2f}'
+            firstfullName = df.iat[0,5]
 
-            # print(firstfullName)
-            # interfullName = firstfullName.split('\n')[0]
-            # nextfullName = " ".join(str(x) for x in interfullName)
-            # print(nextfullName)
+            if df.iat[0,6] == "-NA-":
+                pe = "-NA-"
+            else:
+                pe = f'{df.iat[0,6]:.3f}'
 
-            self.markepcapLabel = Label(self, text = marketCap, fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.peLabel        = Label(self, text = pe, fg = 'white', bg = '#1f2631', font="Verdana 11")
-            # self.industryLabel  = Label(self, text = f'{industry}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.volumeLabel    = Label(self, text = volume, fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.highLabel      = Label(self, text = high, fg = 'white', bg = '#1f2631', font="Verdana 11")
-            # self.fullnameLabel  = Label(self, text = fullName[:13], fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.divRateLabel   = Label(self, text = divRate, fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.priceLabel     = Label(self, text = price, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            
+            if df.iat[0,0] == "-NA-":
+                high = "-NA-"
+            else:
+                high = f'${df.iat[0,0]:.2f}'
+
+            
+            if df.iat[0,4] == "-NA-":
+                fiftytwoHigh = "-NA-"
+            else:
+                fiftytwoHigh = f'${df.iat[0,4]:.2f}'
+
+            
+            if df.iat[0,8] == "-NA-":
+                divRate = "-NA-"
+            else:
+                divRate = f'${df.iat[0,8]:.2f}'
+
+            
+            if df.iat[0,1] == "-NA-":
+                price = "-NA-"
+            else:
+                price = f'${df.iat[0,1]:.2f}'
+    
+
+            firstfullName = firstfullName.split('\n')[0]
+            nextfullName = "".join(str(x) for x in firstfullName)
+            fullName = nextfullName.split('    ')[1]
+
+            self.markepcapLabel     = Label(self, text = f'${marketCap}', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.peLabel            = Label(self, text = pe, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.fiftytwoHighLabel  = Label(self, text = fiftytwoHigh, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.volumeLabel        = Label(self, text = volume, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.highLabel          = Label(self, text = high, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.fullnameLabel      = Label(self, text = f'{fullName[:13]}...', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.divRateLabel       = Label(self, text = divRate, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.priceLabel         = Label(self, text = price, fg = 'white', bg = '#1f2631', font="Verdana 11")
 
             ### Plotting the labels
 
-            # self.fullnameLabel.grid(row = 5, column = 1, padx=5, pady=5, sticky = 'w')
-            # self.industryLabel.grid(row = 6, column = 1, padx=5, pady=5, sticky = 'w')
-            self.priceLabel.grid(row = 7, column = 1, padx=5, pady=5, sticky = 'w')
-            self.highLabel.grid(row = 8, column = 1, padx=5, pady=5, sticky = 'w')
+            self.fullnameLabel.grid(row = 5, column = 1, padx=5, pady=5, sticky = 'w')
+            self.priceLabel.grid(row = 6, column = 1, padx=5, pady=5, sticky = 'w')
+            self.highLabel.grid(row = 7, column = 1, padx=5, pady=5, sticky = 'w')
+            self.fiftytwoHighLabel.grid(row = 8, column = 1, padx=5, pady=5, sticky = 'w')
             self.markepcapLabel.grid(row = 9, column = 1, padx=5, pady=5, sticky = 'w')
             self.volumeLabel.grid(row = 10, column = 1, padx=5, pady=5, sticky = 'w')
             self.peLabel.grid(row = 11, column = 1, padx=5, pady=5, sticky = 'w')

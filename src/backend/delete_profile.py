@@ -8,7 +8,6 @@ def delete_profile(name):
     data = storage.read_data()
 
     if get_profile(name) == "Please enter a valid profile name.":
-        print(get_profile(name))
         raise ValueError ("Please enter a valid profile name.")
     else:
         del data['profiles'][profile_index(name)]

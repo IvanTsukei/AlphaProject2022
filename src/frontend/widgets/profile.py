@@ -70,7 +70,7 @@ class ProfileWidget(tk.Frame):
 
             ### The Labels
 
-            text_empty = '                            '
+            text_empty = '                             '
             self.one    = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
             self.two    = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
             self.three  = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
@@ -302,6 +302,7 @@ class ProfileWidget(tk.Frame):
 
         deleteStock.place(x = 598, y = 312)
         submitdeleteButton.place(x = 683, y = 364)
+        
 
         graphButton.place(x = 651, y = 462)
 

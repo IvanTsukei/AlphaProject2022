@@ -8,6 +8,7 @@ from tkinter import ttk
 from frontend.widgets.stock import StockWidget
 from frontend.widgets.profiles import ProfilesWidget
 from frontend.widgets.profile import ProfileWidget
+from frontend.widgets.analysis import AnalysisWidget
 
 ### Main
 
@@ -44,3 +45,8 @@ class App(tk.Tk):
         self.pWidget.grid(row = 0, column = 0, sticky = "ew")
         self.state = "Profile"
 
+    def start_portfolio_analysis_callback(self, profile):
+        self.clear_screen()
+        self.pWidget.show(profile)
+        self.pWidget.grid(row = 0, column = 0, sticky = "ew")
+        self.state = "Analysis"

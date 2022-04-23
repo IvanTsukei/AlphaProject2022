@@ -1,16 +1,14 @@
 import tkinter as tk
-from tkinter import *
-from tkinter import ttk
+from tkinter import Label
 from PIL import ImageTk, Image
-from tkinter.messagebox import showerror
 import tkinter.font as fnt
 from pathlib import Path
-from functools import partial
+import pandas_datareader.data as web
 
 from backend.get_profile import get_profile
 from backend.add_stock_to_profile import add_stock
 from backend.delete_stock_from_profile import delete_stock
-from backend.get_stock import stock_marketcap, stock_pe, stock_industry, stock_volume, ticker_high, ticker_full_name, dividend_rate, ticker_price
+from backend.get_stock import all_basic_stock_info, stock_marketcap, stock_pe, stock_industry, stock_volume, ticker_high, ticker_full_name, dividend_rate, ticker_price, portfolio_beta
 
 ### Main
 
@@ -133,6 +131,14 @@ class ProfileWidget(tk.Frame):
 
         ### Adding all stocks in profile
 
+        def easy_read_format(value):
+            num = float('{:.3g}'.format(value))
+            size = 0
+            while abs(num) >= 1000:
+                size += 1
+                num /= 1000.0
+            return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'), ['', 'K', 'M', 'B', 'T'][size])
+
         ## Individual stock info
         def stocks_basic_info(self, stock):
 
@@ -146,28 +152,37 @@ class ProfileWidget(tk.Frame):
                 
             ### Function Values
 
-            marketCap = stock_marketcap(stock)
-            pe = stock_pe(stock)
-            industry = stock_industry(stock)
-            volume = stock_volume(stock)
-            high = ticker_high(stock)
-            fullName = ticker_full_name(stock)
-            divRate = dividend_rate(stock)
-            price = ticker_price(stock)
+            df = all_basic_stock_info(stock)
+            # print(df)
 
-            self.markepcapLabel = Label(self, text = f'{marketCap}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.peLabel        = Label(self, text = f'{pe}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.industryLabel  = Label(self, text = f'{industry}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.volumeLabel    = Label(self, text = f'{volume}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.highLabel      = Label(self, text = f'{high}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.fullnameLabel  = Label(self, text = f'{fullName}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.divRateLabel   = Label(self, text = f'{divRate}', fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.priceLabel     = Label(self, text = f'{price}', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            marketCap = easy_read_format(df.iat[0,7])
+            pe = f'{df.iat[0,6]:.3f}'
+            # industry = df.iat[7,0]
+            volume = easy_read_format(df.iat[0,3])
+            high = f'{df.iat[0,0]:.2f}'
+            # fiftytwoHigh = f'{df.iat[4,0]:.2f}'
+            # firstfullName = df.iat[0,5]
+            divRate = f'${df.iat[0,8]:.2f}'
+            price = f'${df.iat[0,1]:.2f}'
+
+            # print(firstfullName)
+            # interfullName = firstfullName.split('\n')[0]
+            # nextfullName = " ".join(str(x) for x in interfullName)
+            # print(nextfullName)
+
+            self.markepcapLabel = Label(self, text = marketCap, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.peLabel        = Label(self, text = pe, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            # self.industryLabel  = Label(self, text = f'{industry}', fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.volumeLabel    = Label(self, text = volume, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.highLabel      = Label(self, text = high, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            # self.fullnameLabel  = Label(self, text = fullName[:13], fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.divRateLabel   = Label(self, text = divRate, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.priceLabel     = Label(self, text = price, fg = 'white', bg = '#1f2631', font="Verdana 11")
 
             ### Plotting the labels
 
-            self.fullnameLabel.grid(row = 5, column = 1, padx=5, pady=5, sticky = 'w')
-            self.industryLabel.grid(row = 6, column = 1, padx=5, pady=5, sticky = 'w')
+            # self.fullnameLabel.grid(row = 5, column = 1, padx=5, pady=5, sticky = 'w')
+            # self.industryLabel.grid(row = 6, column = 1, padx=5, pady=5, sticky = 'w')
             self.priceLabel.grid(row = 7, column = 1, padx=5, pady=5, sticky = 'w')
             self.highLabel.grid(row = 8, column = 1, padx=5, pady=5, sticky = 'w')
             self.markepcapLabel.grid(row = 9, column = 1, padx=5, pady=5, sticky = 'w')
@@ -242,6 +257,17 @@ class ProfileWidget(tk.Frame):
         submitdeleteButton.place(x = 683, y = 364)
 
         graphButton.place(x = 651, y = 462)
+
+
+        ### Portfolio Beta
+
+
+        # portbeta = portfolio_beta(profileName)
+
+
+        # portbetaLabel = Label(self, text = f'{portbeta}', fg = 'white', bg = '#1f2631', font="Verdana 12")
+
+        # portbetaLabel.place(x = 651, y = 562)
         
         
         '''
@@ -254,8 +280,6 @@ class ProfileWidget(tk.Frame):
         Two back button options here, one back to the same profile and another to home page (or just back to home)
 
 
-        Need 
-
-        Have the blue banner at the top of column 1 with the name of the profile?
+        Limit # of stock inputs
 
         '''

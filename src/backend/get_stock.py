@@ -1,10 +1,7 @@
 import pandas as pd
-import datetime as dt
+from datetime import timedelta, date
 import pandas_datareader.data as web
 import numpy as np
-from datetime import date
-from scipy import stats
-import seaborn as sns
 import yfinance as yf
 
 ### Function Imports
@@ -140,7 +137,8 @@ def portfolio_beta(name):
         for x, y in zip(weights, raw_beta): # Accounting for the weight of each stock on the portfolio
             weighted_beta.append(x*y)
 
-        return (sum(weighted_beta))
+        res = (sum(weighted_beta))
+        return (f'{res:.4f}')
 
 
 def stock_volume(stock):
@@ -210,3 +208,21 @@ def dividend_rate(stock):
         return dividendRate
     else:
         return "-NA-"
+
+###################################################################
+
+def all_basic_stock_info(ticker):
+
+    today = date.today()
+    yesterday = today - timedelta(days = 180)
+
+    df = web.DataReader(ticker, 'yahoo', today)
+    df['fiftyTwoHigh'] = float(web.get_quote_yahoo(ticker)['fiftyTwoWeekHigh'])
+    df['longName'] = str(web.get_quote_yahoo(ticker)['longName'])
+    df['trailingPE'] = float(web.get_quote_yahoo(ticker)['trailingPE'])
+    df['marketCap'] = int(web.get_quote_yahoo(ticker)['marketCap'])
+    df['divAmount'] = web.DataReader('IBM', 'yahoo-dividends', yesterday, today).iat[1,1]
+
+    df.drop(['Low', 'Adj Close'], axis=1, inplace=True)
+
+    return df

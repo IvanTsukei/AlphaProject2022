@@ -13,8 +13,9 @@ from backend.get_stock import all_basic_stock_info
 ### Main
 
 class ProfileWidget(tk.Frame):
-    def __init__(self, parent, back_callback):
+    def __init__(self, parent, back_callback, analysis_callback):
         tk.Frame.__init__(self, parent)
+        self.analysis_callback = analysis_callback
         self.parent = parent
 
         self.back_button = tk.Button(self, text="Back", fg = 'white', bg = '#6e819e', activebackground = '#f4595d', activeforeground = '#2a2b2c', font = fnt.Font(font = "Verdana 10 bold"), command = back_callback)
@@ -106,7 +107,7 @@ class ProfileWidget(tk.Frame):
 
         newStock = tk.Text(self, height = 1, width = 22, padx=10, pady=10, foreground="#2a2b2c", bg='#628ffa', font="Verdana 12 bold", borderwidth=2) # Initiating the stock adding textbox
         deleteStock = tk.Text(self, height = 1, width = 22, padx=10, pady=10, foreground="#2a2b2c", bg='#628ffa', font="Verdana 12 bold", borderwidth=2) # Initiating the stock deleting textbox
-        graphButton = tk.Button(self, text = 'Start Portfolio Analysis', fg = 'white', bg = '#6e819e', activebackground = '#50678a', font = fnt.Font(font = "Verdana 10"))
+        graphButton = tk.Button(self, text = 'Start Portfolio Analysis', fg = 'white', bg = '#6e819e', activebackground = '#50678a', font = fnt.Font(font = "Verdana 10"), command = lambda: self.analysis_callback(profileName))
         
 
         ### BG Image

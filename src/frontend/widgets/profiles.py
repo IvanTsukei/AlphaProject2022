@@ -124,7 +124,7 @@ class ProfilesWidget(tk.Frame):
                     invalidInput.grid(row = 12, column = 1)
                 else:
                     cmd(userInput)
-                    invalidInput.grid(row = 16, column = 1)
+                    invalidInput.grid(row = 18, column = 1)
 
                 self.after(2000, clear_error, invalidInput)
 

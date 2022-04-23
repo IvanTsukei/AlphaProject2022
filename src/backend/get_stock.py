@@ -1,5 +1,5 @@
 import pandas as pd
-from datetime import timedelta, date
+from datetime import timedelta, date, datetime
 import pandas_datareader.data as web
 import numpy as np
 import yfinance as yf
@@ -119,9 +119,18 @@ def portfolio_extected_return(name, starting, ending):
 def all_basic_stock_info(ticker):
 
     today = date.today()
-    yesterday = today - timedelta(days = 180) # In case this is run between 12am and 9:30am of the following day
+    weeknumber = datetime.today().weekday()
 
-    df = web.DataReader(ticker, 'yahoo',yesterday, today)
+    ## Will still break for holidays where the market is closed during a weekday.
+    if weeknumber == 5:
+        yesterday = today - timedelta(days = 1)
+        df = web.DataReader(ticker, 'yahoo',yesterday, today)
+    elif weeknumber == 6:
+        yesterday = today - timedelta(days = 2)
+        df = web.DataReader(ticker, 'yahoo',yesterday, today)
+    else:
+        df = web.DataReader(ticker, 'yahoo', today)
+
 
     try:
         df['fiftyTwoHigh'] = float(web.get_quote_yahoo(ticker)['fiftyTwoWeekHigh'])
@@ -144,9 +153,14 @@ def all_basic_stock_info(ticker):
         df['marketCap'] =  ('-NA-')
 
     try:
-        df['divAmount'] = web.DataReader('IBM', 'yahoo-dividends', yesterday, today).iat[1,1]
+        df['divAmount'] = float(web.get_quote_yahoo(ticker)['trailingAnnualDividendYield'])
     except KeyError:
         df['divAmount'] = ('-NA-')
+
+    try:
+        df['analystRating'] = str(web.get_quote_yahoo(ticker)['averageAnalystRating'])
+    except KeyError:
+        df['analystRating'] = ('-NA-')
 
     df.drop(['Low', 'Adj Close'], axis=1, inplace=True)
 

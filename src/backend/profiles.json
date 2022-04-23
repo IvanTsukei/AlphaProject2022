@@ -19,16 +19,9 @@
             ]
         },
         {
-            "name": "monke",
+            "name": "More Test",
             "email": "NA",
             "stocks": []
-        },
-        {
-            "name": "hello there",
-            "email": "NA",
-            "stocks": [
-                "GME"
-            ]
         }
     ]
 }

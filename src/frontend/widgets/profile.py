@@ -30,7 +30,7 @@ class ProfileWidget(tk.Frame):
         self.grid_columnconfigure(1, minsize=200)
         self.grid_columnconfigure(2, minsize=220)
         self.grid_columnconfigure(3, minsize=347)
-        self.grid_rowconfigure(13, minsize=698) # Extend widget to full canvas size
+        self.grid_rowconfigure(15, minsize=698) # Extend widget to full canvas size
         self.grid_rowconfigure(2, minsize=115) # To move stock list down
 
         self.stock_buttons = []
@@ -60,7 +60,7 @@ class ProfileWidget(tk.Frame):
 
             ### Clearing Previous Info
 
-            allLabels = ['self.markepcapLabel', 'self.peLabel', 'self.industryLabel', 'self.volumeLabel', 'self.highLabel', 'self.fullnameLabel', 'self.divRateLabel', 'self.priceLabel']
+            allLabels = ['self.one', 'self.two', 'self.three', 'self.four', 'self.five', 'self.six', 'self.seven', 'self.eight', 'self.nine', 'self.ten']
 
             for i in allLabels: # Saving space
                 if (hasattr(self, i)): # Clears the empty list label
@@ -71,25 +71,29 @@ class ProfileWidget(tk.Frame):
             ### The Labels
 
             text_empty = '                            '
-            self.markepcapLabel = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.peLabel        = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.industryLabel  = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.volumeLabel    = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.highLabel      = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.fullnameLabel  = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.divRateLabel   = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
-            self.priceLabel     = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.one    = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.two    = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.three  = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.four   = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.five   = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.six    = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.seven  = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.eight  = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.nine   = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.ten    = Label(self, text = text_empty, fg = 'white', bg = '#1f2631', font="Verdana 11")
 
             ### Plotting the labels
 
-            self.fullnameLabel.grid(row = 5, column = 1, padx=5, pady=5, sticky = 'w')
-            self.industryLabel.grid(row = 6, column = 1, padx=5, pady=5, sticky = 'w')
-            self.priceLabel.grid(row = 7, column = 1, padx=5, pady=5, sticky = 'w')
-            self.highLabel.grid(row = 8, column = 1, padx=5, pady=5, sticky = 'w')
-            self.markepcapLabel.grid(row = 9, column = 1, padx=5, pady=5, sticky = 'w')
-            self.volumeLabel.grid(row = 10, column = 1, padx=5, pady=5, sticky = 'w')
-            self.peLabel.grid(row = 11, column = 1, padx=5, pady=5, sticky = 'w')
-            self.divRateLabel.grid(row = 12, column = 1, padx=5, pady=5, sticky = 'w')
+            self.one.grid(row = 5, column = 1, padx=5, pady=5, sticky = 'w')
+            self.two.grid(row = 6, column = 1, padx=5, pady=5, sticky = 'w')
+            self.three.grid(row = 7, column = 1, padx=5, pady=5, sticky = 'w')
+            self.four.grid(row = 8, column = 1, padx=5, pady=5, sticky = 'w')
+            self.five.grid(row = 9, column = 1, padx=5, pady=5, sticky = 'w')
+            self.six.grid(row = 10, column = 1, padx=5, pady=5, sticky = 'w')
+            self.seven.grid(row = 11, column = 1, padx=5, pady=5, sticky = 'w')
+            self.eight.grid(row = 12, column = 1, padx=5, pady=5, sticky = 'w')
+            self.nine.grid(row = 13, column = 1, padx=5, pady=5, sticky = 'w')
+            self.ten.grid(row = 14, column = 1, padx=5, pady=5, sticky = 'w')
         
         clear_basic_info(self)
 
@@ -146,7 +150,7 @@ class ProfileWidget(tk.Frame):
 
             ### Clearing Previous Info
 
-            allLabels = ['self.markepcapLabel', 'self.peLabel', 'self.fiftytwoHighLabel', 'self.volumeLabel', 'self.highLabel', 'self.fullnameLabel', 'self.divRateLabel', 'self.priceLabel']
+            allLabels = ['self.markepcapLabel', 'self.peLabel', 'self.fiftytwoHighLabel', 'self.volumeLabel', 'self.highLabel', 'self.fullnameLabel', 'self.divRateLabel', 'self.priceLabel', 'self.closeLabel', 'self.analystLabel']
 
             for i in allLabels: # Saving space
                 if (hasattr(self, i)): # Clears the empty list label
@@ -155,6 +159,8 @@ class ProfileWidget(tk.Frame):
             ### Function Values
 
             df = all_basic_stock_info(stock) # SO much faster than using yfinance and doing a query on each key
+
+            print(df)
             
             marketCap = easy_read_format(df.iat[0,7])
             volume = easy_read_format(df.iat[0,3])
@@ -171,6 +177,11 @@ class ProfileWidget(tk.Frame):
             else:
                 high = f'${df.iat[0,0]:.2f}'
 
+            if df.iat[0,1] == "-NA-":
+                close = "-NA-"
+            else:
+                close = f'${df.iat[0,1]:.2f}'
+
             
             if df.iat[0,4] == "-NA-":
                 fiftytwoHigh = "-NA-"
@@ -181,15 +192,23 @@ class ProfileWidget(tk.Frame):
             if df.iat[0,8] == "-NA-":
                 divRate = "-NA-"
             else:
-                divRate = f'${df.iat[0,8]:.2f}'
+                divRate = f'{df.iat[0,8]:,.2%}'
 
             
             if df.iat[0,1] == "-NA-":
                 price = "-NA-"
             else:
                 price = f'${df.iat[0,1]:.2f}'
-    
 
+            if df.iat[0,9] == "-NA-":
+                analysts = "-NA-"
+            else:
+                analysts = df.iat[0,9]
+                analystsFirst = analysts.split('\n')[0]
+                analystsRes1 = "".join(str(x) for x in analystsFirst)
+                analystFinal = analystsRes1.split('    ')[1]
+    
+            print(analystFinal)
             firstfullName = firstfullName.split('\n')[0]
             nextfullName = "".join(str(x) for x in firstfullName)
             fullName = nextfullName.split('    ')[1]
@@ -202,17 +221,21 @@ class ProfileWidget(tk.Frame):
             self.fullnameLabel      = Label(self, text = f'{fullName[:13]}...', fg = 'white', bg = '#1f2631', font="Verdana 11")
             self.divRateLabel       = Label(self, text = divRate, fg = 'white', bg = '#1f2631', font="Verdana 11")
             self.priceLabel         = Label(self, text = price, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.closeLabel         = Label(self, text = close, fg = 'white', bg = '#1f2631', font="Verdana 11")
+            self.analystLabel       = Label(self, text = analystFinal, fg = 'white', bg = '#1f2631', font="Verdana 11")
 
             ### Plotting the labels
 
             self.fullnameLabel.grid(row = 5, column = 1, padx=5, pady=5, sticky = 'w')
             self.priceLabel.grid(row = 6, column = 1, padx=5, pady=5, sticky = 'w')
             self.highLabel.grid(row = 7, column = 1, padx=5, pady=5, sticky = 'w')
-            self.fiftytwoHighLabel.grid(row = 8, column = 1, padx=5, pady=5, sticky = 'w')
-            self.markepcapLabel.grid(row = 9, column = 1, padx=5, pady=5, sticky = 'w')
-            self.volumeLabel.grid(row = 10, column = 1, padx=5, pady=5, sticky = 'w')
-            self.peLabel.grid(row = 11, column = 1, padx=5, pady=5, sticky = 'w')
-            self.divRateLabel.grid(row = 12, column = 1, padx=5, pady=5, sticky = 'w')
+            self.closeLabel.grid(row = 8, column = 1, padx=5, pady=5, sticky = 'w')
+            self.fiftytwoHighLabel.grid(row = 9, column = 1, padx=5, pady=5, sticky = 'w')
+            self.markepcapLabel.grid(row = 10, column = 1, padx=5, pady=5, sticky = 'w')
+            self.volumeLabel.grid(row = 11, column = 1, padx=5, pady=5, sticky = 'w')
+            self.peLabel.grid(row = 12, column = 1, padx=5, pady=5, sticky = 'w')
+            self.divRateLabel.grid(row = 13, column = 1, padx=5, pady=5, sticky = 'w')
+            self.analystLabel.grid(row = 14, column = 1, padx=5, pady=5, sticky = 'w')
 
         
         ### Individual Stocks

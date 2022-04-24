@@ -29,15 +29,19 @@ class App(tk.Tk):
 
         self.pWidget = ProfileWidget(self, self.back_callback, self.start_portfolio_analysis_callback)
 
-        self.analWidget = AnalysisWidget(self, self.back_callback)
+        self.analysisWidget = AnalysisWidget(self, self.back_callback)
 
     def clear_screen(self):
         self.plistWidget.grid_remove()
         self.pWidget.grid_remove()
+        self.analysisWidget.grid_remove()
 
     def back_callback(self):
         self.clear_screen()
         if self.state == "Profile":
+            self.state == "Home"
+            self.plistWidget.grid(row = 0, column = 0, sticky = "ew")
+        elif self.state == "Analysis":
             self.state == "Home"
             self.plistWidget.grid(row = 0, column = 0, sticky = "ew")
 
@@ -49,5 +53,6 @@ class App(tk.Tk):
 
     def start_portfolio_analysis_callback(self, profile):
         self.clear_screen()
-        self.analWidget.grid(row = 0, column = 0, sticky = "ew")
+        self.analysisWidget.analyze(profile)
+        self.analysisWidget.grid(row = 0, column = 0, sticky = "ew")
         self.state = "Analysis"

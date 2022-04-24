@@ -40,14 +40,15 @@ def stock_list(name):
 
 ### Functions
 
-def stock_basic_history(name, starting, ending):
+def stock_basic_history(name):
     existing = data['profiles'][profile_index(name)]['stocks']
 
-    if get_profile(name) == "Please enter a valid profile name.":
-        print(get_profile(name))
-    else:
-        df = web.DataReader(existing, 'yahoo', starting, ending)
-        return df.head()
+    today = date.today()
+    yesterday = today - timedelta(days = 360)
+
+    df = web.DataReader(existing, 'yahoo',yesterday, today)['Adj Close']
+
+    return df
 
 
 def portfolio_dividends(name, starting, ending):

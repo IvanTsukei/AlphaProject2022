@@ -3,6 +3,9 @@ from datetime import timedelta, date, datetime
 import pandas_datareader.data as web
 import numpy as np
 import yfinance as yf
+from matplotlib.dates import MonthLocator, DateFormatter
+import matplotlib.pyplot as plt
+from pathlib import Path
 
 ### Function Imports
 
@@ -40,6 +43,34 @@ def stock_list(name):
 
 ### Functions
 
+def plot_daily_returns(data, name):
+            stocks = storage.read_data()
+            legend = stocks['profiles'][profile_index(name)]['stocks']
+            
+            fig, ax = plt.subplots(figsize=(8.260416, 2.60416), tight_layout = True)
+            ax.plot(data)
+            ax.legend(legend, loc='right', bbox_to_anchor=(1.114, .8), shadow=False, ncol=1, fontsize=7, frameon=False, labelcolor='white')
+
+            ### Plotting
+            ax.xaxis.set_major_locator(MonthLocator())
+            ax.xaxis.set_major_formatter(DateFormatter("%b-%y"))
+            ax.tick_params(axis="x", labelrotation= 30)
+            ax.set_ylabel('Price ($)')
+
+            ### Design elements
+            ax.tick_params(axis='x', colors='white')
+            ax.tick_params(axis='y', colors='white')
+            ax.yaxis.label.set_color('white')
+            ax.spines['bottom'].set_color('white')
+            ax.spines['top'].set_color('white') 
+            ax.spines['right'].set_color('white')
+            ax.spines['left'].set_color('white')
+
+
+            ### Saving
+            fileLoc = Path(__file__).parents[1] / 'frontend' / 'widgets' /'Images' / 'dailyreturns.png'
+            ax.figure.savefig(fileLoc, transparent=True)
+
 def stock_basic_history(name):
     existing = data['profiles'][profile_index(name)]['stocks']
 
@@ -48,7 +79,7 @@ def stock_basic_history(name):
 
     df = web.DataReader(existing, 'yahoo',yesterday, today)['Adj Close']
 
-    return df
+    plot_daily_returns(df, name)
 
 
 def portfolio_dividends(name, starting, ending):

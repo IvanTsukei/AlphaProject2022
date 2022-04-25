@@ -9,7 +9,7 @@ import time
 from backend.get_profile import get_profile
 from backend.add_stock_to_profile import add_stock
 from backend.delete_stock_from_profile import delete_stock
-from backend.get_stock import all_basic_stock_info, stock_basic_history
+from backend.get_stock import all_basic_stock_info, portfolio_beta
 
 ### Main
 
@@ -309,64 +309,12 @@ class ProfileWidget(tk.Frame):
         graphButton.place(x = 651, y = 462)
 
 
+        ## Portfolio Beta
 
-        ### Returns Graph at bottom
-
-        # def clear_error(value): # Removes error message.
-        #     value.destroy()
+        def port_beta():
+            portbeta = portfolio_beta(profileName)
+            portbetaLabel = Label(self, text = portbeta, fg = 'white', bg = '#232833', font="Verdana 12")
+            portbetaLabel.place(x = 135, y = 590)
         
-        def show_returns():
-            # invalidInput = Label(self, text = 'Generating Graph...', fg = 'green', bg = '#232833', font="Verdana 8 italic")
-            # invalidInput.place(x = 393, y = 583)
-            # self.after(2000, clear_error, invalidInput)
-
-            stock_basic_history(profileName)
-
-            time.sleep(2) # Give the pc a second to update the file
-
-            returnsGraph = Path(__file__).parent.resolve() / 'Images' / 'dailyreturns.png'
-
-            self.graphbgImageLoc = Image.open(returnsGraph)
-            self.graphbgImage = ImageTk.PhotoImage(self.graphbgImageLoc)
-            self.graphbgImageDiv = tk.Label(self, image = self.graphbgImage, bg = '#1f2631')
-            self.graphbgImageDiv.image = self.graphbgImage # Saving the ref
-            self.graphbgImageDiv.place(x = 34, y = 590)
-
-        
-
-
-        self.plot_button = tk.Button(self, text="Plot 1yr Returns", fg = 'white', bg = '#6e819e', activebackground = '#6390fa', activeforeground = '#2a2b2c', font = fnt.Font(font = "Verdana 10 bold"), command = show_returns)
-        self.plot_button.place(x = 390, y = 555)
-
-            
-        
-        # stock_basic_history(profileName)
-
-
-
-
-
-        ### Portfolio Beta
-
-
-        # portbeta = portfolio_beta(profileName)
-
-
-        # portbetaLabel = Label(self, text = f'{portbeta}', fg = 'white', bg = '#1f2631', font="Verdana 12")
-
-        # portbetaLabel.place(x = 651, y = 562)
-        
-        
-        '''
-        To add: clicking on a individual stock will give fullname and basic markit info. Everything under backend.get_stock. 
-
-        Combobox again in a different column for the actual selection of chart stuff along with chart settings. 
-        Clicking a option in the combobox would change the options people have below it for the color/line type/etc.
-        A "graph it" button would then show the charts on a new screen.
-
-        Two back button options here, one back to the same profile and another to home page (or just back to home)
-
-
-        Limit # of stock inputs
-
-        '''
+        self.beta_button = tk.Button(self, text="Portfolio Beta", fg = 'white', bg = '#6390fa', activebackground = '#30467b', activeforeground = '#2a2b2c', font = fnt.Font(font = "Verdana 10 bold"), command = port_beta)
+        self.beta_button.place(x = 110, y = 555)

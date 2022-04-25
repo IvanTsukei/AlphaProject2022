@@ -78,6 +78,7 @@ def stock_basic_history(name):
     yesterday = today - timedelta(days = 360)
 
     df = web.DataReader(existing, 'yahoo',yesterday, today)['Adj Close']
+    df = df.clip(lower = 0) # Since my stock adder isn't perfect, tickers like SNSLF can get in which break it.
 
     plot_daily_returns(df, name)
 
@@ -121,7 +122,10 @@ def portfolio_beta(name):
 
         for stock in existing: 
             info = yf.Ticker(stock).info
-            beta = info['beta']
+            try:
+                beta = info['beta']
+            except KeyError: # Def. not the right way to do this but no time to fix. Calc. will be wrong but crash avoided.
+                beta = 1
             raw_beta.append(beta)
         
         for x, y in zip(weights, raw_beta): # Accounting for the weight of each stock on the portfolio

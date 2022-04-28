@@ -4,12 +4,11 @@ from PIL import ImageTk, Image
 import tkinter.font as fnt
 from pathlib import Path
 import pandas_datareader.data as web
-import time
 
 from backend.get_profile import get_profile
 from backend.add_stock_to_profile import add_stock
 from backend.delete_stock_from_profile import delete_stock
-from backend.get_stock import all_basic_stock_info, portfolio_beta
+from backend.get_stock import all_basic_stock_info, portfolio_beta, portfolio_std_dev
 
 ### Main
 
@@ -161,8 +160,6 @@ class ProfileWidget(tk.Frame):
             ### Function Values
 
             df = all_basic_stock_info(stock) # SO much faster than using yfinance and doing a query on each key
-
-            print(df)
             
             marketCap = easy_read_format(df.iat[0,7])
             volume = easy_read_format(df.iat[0,3])
@@ -210,8 +207,7 @@ class ProfileWidget(tk.Frame):
                 analystsRes1 = "".join(str(x) for x in analystsFirst)
                 analystFinal = analystsRes1.split('    ')[1]
     
-            print(analystFinal)
-            firstfullName = firstfullName.split('\n')[0]
+            firstfullName = firstfullName.split('\n')[0] # getting company name in proper format
             nextfullName = "".join(str(x) for x in firstfullName)
             fullName = nextfullName.split('    ')[1]
 
@@ -318,3 +314,13 @@ class ProfileWidget(tk.Frame):
         
         self.beta_button = tk.Button(self, text="Portfolio Beta", fg = 'white', bg = '#6390fa', activebackground = '#30467b', activeforeground = '#2a2b2c', font = fnt.Font(font = "Verdana 10 bold"), command = port_beta)
         self.beta_button.place(x = 110, y = 555)
+
+        ## Portfolio Dev
+
+        def port_dev():
+            portdev = portfolio_std_dev(profileName)
+            portdevLabel = Label(self, text = portdev, fg = 'white', bg = '#232833', font="Verdana 12")
+            portdevLabel.place(x = 405, y = 590)
+        
+        self.def_button = tk.Button(self, text="Portfolio Std.Dev", fg = 'white', bg = '#6390fa', activebackground = '#30467b', activeforeground = '#2a2b2c', font = fnt.Font(font = "Verdana 10 bold"), command = port_dev)
+        self.def_button.place(x = 380, y = 555)

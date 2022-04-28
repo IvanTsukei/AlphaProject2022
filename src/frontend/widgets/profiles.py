@@ -19,7 +19,7 @@ class ProfilesWidget(tk.Frame):
         self.parent = parent
         self.configure(bg='#272c38')
 
-        # Very much a patchwork job getting the BG image in...
+        # Very much a patchwork job getting the BG image in...Not just for bg but making all the elements line up
         self.grid_columnconfigure(0, minsize=303)
         self.grid_columnconfigure(1, minsize=286)
         self.grid_columnconfigure(2, minsize=311)

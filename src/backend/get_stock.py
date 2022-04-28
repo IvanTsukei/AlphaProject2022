@@ -18,24 +18,6 @@ from backend.get_profile import get_profile
 df_m = pd.DataFrame()
 data = storage.read_data()
 
-
-'''
-To Add:
-- Dividend Yield
-- ROE (Potentially)
-- Debt to equity
-
-Pull right from Pandas
-- Market Cap
-- Avg. Volume
-- 1yr Target estimate
-- Next earnings report date
-- Beta
-- Price to Earnings Ratio
-- Earnings per share
-
-'''
-
 def stock_list(name):
     existing = data['profiles'][profile_index(name)]['stocks']
     return existing
@@ -78,7 +60,7 @@ def stock_basic_history(name):
     yesterday = today - timedelta(days = 360)
 
     df = web.DataReader(existing, 'yahoo',yesterday, today)['Adj Close']
-    df = df.clip(lower = 0) # Since my stock adder isn't perfect, tickers like SNSLF can get in which break it.
+    df = df.clip(lower = 0) # Since my stock adder isn't perfect, tickers like SSNLF  can get in which break it.
 
     plot_daily_returns(df, name)
 
@@ -133,6 +115,26 @@ def portfolio_beta(name):
 
         res = (sum(weighted_beta))
         return (f'{res:.4f}')
+
+
+def portfolio_std_dev(name):
+    existing = data['profiles'][profile_index(name)]['stocks']
+
+    weights = np.array([1/len(existing) for x in range(len(existing))])# Don't have time to code a more complex system that would allow people to enter their own weights. This assumes equally weighted portfolio 
+
+    today = date.today()
+    yesterday = today - timedelta(days = 360)
+    returns_data = web.DataReader(existing, 'yahoo', yesterday, today)['Adj Close']
+    returns = returns_data.pct_change()
+    returns.dropna(inplace = True)
+
+    covReturns = (returns.cov())*250
+    # portVariance = np.dot(weights.T, np.dot(covReturns, weights))
+    port_stddev = np.sqrt(np.dot(weights.T, np.dot(covReturns, weights)))
+
+    res = port_stddev*100
+
+    return (f'{res:.3f}%')
 
 ### Calculation Functions
 

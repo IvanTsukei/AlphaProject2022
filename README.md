@@ -65,6 +65,8 @@
     <img src="src/frontend/widgets/Images/ExampleLook.png" alt="Example" width="673" height="698">
   </a>
 </div>
+<br />
+<br />
 
 I created this in about a week (totally didn't have 2 months to work on this of which I only used a week due to procrastination :sweat_smile:) and with it being one of my first larger projects in Python, I wanted to share it. I commented as much as possible and tried to break up the code into separate files, but the code is still certainly a bit messy. However, I think people who are just starting out with tkinter and pandas will find some use in looking over my work.
 

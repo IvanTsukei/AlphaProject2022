@@ -1,0 +1,150 @@
+<div id="top"></div>
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
+
+
+
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">VT FIN-3114 Alpha Project</h3>
+
+  <p align="center">
+    TKinter based application to create and analyze stock portfolios. Created as my Alpha Project.
+    <br />
+    Please keep in mind that this is intended as a reference. Copying this for a class is an Honor Code violation.
+    <br />
+  </p>
+</div>
+
+
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+[![Product Name Screen Shot][product-screenshot]]
+
+I created this in about a week (totally didn't have 2 months to work on this of which I only used a week due to procrastination :sweat_smile:) and with it being one of my first larger projects in Python, I wanted to share it. I commented as much as possible and tried to break up the code into separate files, but the code is still certainly a bit messy. However, I think people who are just starting out with tkinter and pandas will find some use in looking over my work.
+
+As a reminder:
+* This is intended as a reference. If you copy this for a class, just keep in mind it can be flagged and you will likely receive a 0
+* Yes, it's not the cleanest code but I did the best I could as someone new to programming 
+* All images used were created by me in Photoshop. Please do not use them elsewhere nor copy their likeness
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+### Requirements
+
+Please ensure each of the following are installed otherwise the program will not run. Use <b>pip install</b> in powershell.
+
+* [tkinter](https://docs.python.org/3/library/tkinter.html)
+* [matplotlib](https://matplotlib.org/)
+* [pandas](https://pandas.pydata.org/docs/)
+* [pandas-datareader](https://pandas-datareader.readthedocs.io/en/latest/)
+* [NumPy](https://numpy.org/)
+* [pillow](https://pillow.readthedocs.io/en/stable/reference/Image.html)
+* [yfinance](https://pypi.org/project/yfinance/)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+Once all of the above libraries are installed, simply run the program from:
+  ```sh
+  main.py
+  ```
+ within the src file. 
+
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+I'd like to preserve my first "large" project so no contributions will be accepted. 
+
+However, feel free to check out the [new version](https://github.com/IvanTsukei/Investment-Portfolio-Manager) that I'm working on using pyside6!
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See [here](https://opensource.org/licenses/MIT) for more information.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
+[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
+[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
+[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
+[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/othneildrew
+[product-screenshot]: images/screenshot.png

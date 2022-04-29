@@ -28,9 +28,9 @@
   <h3 align="center">VT FIN-3114 Alpha Project</h3>
 
   <p align="center">
-    TKinter based application to create and analyze stock portfolios. Created as my Alpha Project.
+    TKinter based application to create and analyze stock portfolios.
     <br />
-    Please keep in mind that this is intended as a reference. Copying this for a class is an Honor Code violation.
+    Created for VT FIN-3114
     <br />
   </p>
 </div>

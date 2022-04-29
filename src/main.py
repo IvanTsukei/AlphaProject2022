@@ -3,6 +3,8 @@ import backend.storage as storage
 
 ### Run this file to view the program
 
+### Ensure all libs. from requirements.txt are installed
+
 
 def main():
     app = App()

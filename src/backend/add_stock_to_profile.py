@@ -1,8 +1,6 @@
 import backend.storage as storage
-import yfinance as yf
 import pandas_datareader.data as web
 from backend.get_profile import profile_index
-from backend.get_profile import get_profile
 
 ### Main
 
@@ -14,12 +12,14 @@ def add_stock(name, stock):
     
     def invalid_stock_input(stock):
 
+        # If no entry
         if stock == "":
             raise ValueError ("Not a valid stock ticker.")
 
+        # Checks if a bid exists. Good indicator of if the stock is valid
         try:
-            int(web.get_quote_yahoo(stock)['marketCap'])
-        except IndexError:
+            int(web.get_quote_yahoo(stock)['bid'])
+        except (KeyError, IndexError):
             raise ValueError ("Not a valid stock ticker.")
 
     def stock_exists(stock):
@@ -30,11 +30,6 @@ def add_stock(name, stock):
     if invalid_stock_input(stock):
         print(invalid_stock_input(stock))
         return False
-
-    ### Adding the stock after checking if the profile exists.
-
-    # if get_profile(name) == "Please enter a valid profile name.":
-    #     print(get_profile(name))
 
     if stock_exists(stock):
         print(stock_exists(stock))

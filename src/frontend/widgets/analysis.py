@@ -3,18 +3,11 @@ from tkinter import Label
 from PIL import ImageTk, Image
 import tkinter.font as fnt
 from pathlib import Path
-import pandas_datareader.data as web
-import pandas as pd
 import time
 
-
-from matplotlib.dates import MonthLocator, DateFormatter
-import matplotlib.pyplot as plt
-
-
 from backend.get_stock import stock_basic_history
-from backend.get_profile import get_profile, profile_index
-import backend.storage as storage
+from backend.get_profile import get_profile
+
 
 class AnalysisWidget(tk.Frame):
     def __init__(self, parent, back_callback):
@@ -53,9 +46,6 @@ class AnalysisWidget(tk.Frame):
         self.addprofileLabel.grid(row = 0, column = 3, sticky = "ne", pady=2)
 
         def show_returns():
-            # invalidInput = Label(self, text = 'Generating Graph...', fg = 'green', bg = '#232833', font="Verdana 8 italic")
-            # invalidInput.place(x = 393, y = 583)
-            # self.after(2000, clear_error, invalidInput)
 
             stock_basic_history(profileName)
 
@@ -72,5 +62,3 @@ class AnalysisWidget(tk.Frame):
 
         self.plot_button = tk.Button(self, text="Plot 1yr Returns", fg = 'white', bg = '#6e819e', activebackground = '#6390fa', activeforeground = '#2a2b2c', font = fnt.Font(font = "Verdana 10 bold"), command = show_returns)
         self.plot_button.place(x = 390, y = 555)
-
-

@@ -5,12 +5,18 @@ from backend.get_profile import profile_index
 ### Main
 
 def add_stock(name, stock):
+    """
+    Function for adding a stock to the profile.
+    """
 
     data = storage.read_data()
 
     ### Checking if stock ticker is valid.
     
     def invalid_stock_input(stock):
+        """
+        Function to check if the stock is valid.
+        """
 
         # If no entry
         if stock == "":
@@ -23,6 +29,9 @@ def add_stock(name, stock):
             raise ValueError ("Not a valid stock ticker.")
 
     def stock_exists(stock):
+        """
+        Function to cmake sure the stock isn't already in the profile.
+        """
         existing = data['profiles'][profile_index(name)]['stocks']
         if stock.upper() in existing:
             raise ValueError ("This Ticker is already in this profile.")

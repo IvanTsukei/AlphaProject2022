@@ -1,10 +1,11 @@
 from frontend.main import App
 import backend.storage as storage
 
-### Run this file to view the program
+"""
+# Run this file to view the program
 
-### Ensure all libs. from requirements.txt are installed
-
+# Ensure all libs. from requirements.txt are installed
+"""
 
 def main():
     app = App()

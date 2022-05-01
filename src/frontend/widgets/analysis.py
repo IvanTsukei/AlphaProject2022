@@ -10,7 +10,13 @@ from backend.get_profile import get_profile
 
 
 class AnalysisWidget(tk.Frame):
+    """
+    The widget for the analysis page
+    """
     def __init__(self, parent, back_callback):
+        """
+        Setting up the frame itself.
+        """
         tk.Frame.__init__(self, parent)
         self.parent = parent
 
@@ -38,6 +44,9 @@ class AnalysisWidget(tk.Frame):
     
 
     def analyze(self, profile):
+        """
+        Used for getting needed variables.
+        """
         profile = get_profile(profile)
         profileName = profile['name'] # Needed to get the actual profile name
         self.profileName = profileName
@@ -46,6 +55,9 @@ class AnalysisWidget(tk.Frame):
         self.addprofileLabel.grid(row = 0, column = 3, sticky = "ne", pady=2)
 
         def show_returns():
+            """
+            Used to bring in the graph.
+            """
 
             stock_basic_history(profileName)
 

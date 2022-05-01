@@ -13,7 +13,13 @@ from backend.get_stock import all_basic_stock_info, portfolio_beta, portfolio_st
 ### Main
 
 class ProfileWidget(tk.Frame):
+    """
+    Widget for the individual profiles.
+    """
     def __init__(self, parent, back_callback, analysis_callback):
+        """
+        Sets up the screen.
+        """
         tk.Frame.__init__(self, parent)
         self.analysis_callback = analysis_callback
         self.parent = parent
@@ -39,10 +45,16 @@ class ProfileWidget(tk.Frame):
     ### Main Stuff Below
 
     def reload(self):
+        """
+        Supposed to reload the page for adding new stocks.
+        """
         self.show(self.profileName)
 
 
     def show(self, profile_name):
+        """
+        All the rest of the functions needed
+        """
         profile = get_profile(profile_name)
         profileName = profile['name'] # Needed to get the actual profile name
         self.profileName = profileName
@@ -58,6 +70,9 @@ class ProfileWidget(tk.Frame):
 
         ### Can't figure out out to get to the labels within the function, global isn't working, so this awful workaround will have to do for now.
         def clear_basic_info(self):
+            """
+            Hides persisting stock info behind a label when moving to a new page
+            """
 
             ### Clearing Previous Info
 
@@ -137,6 +152,9 @@ class ProfileWidget(tk.Frame):
         ### Adding all stocks in profile
 
         def easy_read_format(value):
+            """
+            Reformats numbers to an easier to read format.
+            """
             if value == "-NA-":
                 return "-NA-"
             num = float('{:.3g}'.format(value))
@@ -148,6 +166,9 @@ class ProfileWidget(tk.Frame):
 
         ## Individual stock info
         def stocks_basic_info(self, stock):
+            """
+            Loading in the stock info for the left side.
+            """
 
             ### Clearing Previous Info
 
@@ -256,10 +277,16 @@ class ProfileWidget(tk.Frame):
 
         ### Adding a new stock to profile
 
-        def clear_error(value): # Removes error message.
+        def clear_error(value):
+            """
+            Removes error message label
+            """
             value.destroy()
 
-        def profile_check_callback(widget, cmd): # Handles outputting of error messages for adding a new profile and getting the input of the text box. Also handles deleting a profile to save on space.
+        def profile_check_callback(widget, cmd):
+            """
+            Handles outputting of error messages for adding a new profile and getting the input of the text box. Also handles deleting a profile to save on space.
+            """
             userInput = widget.get('1.0', 'end-1c')
 
             invalidInput = Label(self, text = 'Done!', fg = 'green', bg = '#1f2631', font="Verdana 10 italic")
@@ -308,6 +335,9 @@ class ProfileWidget(tk.Frame):
         ## Portfolio Beta
 
         def port_beta():
+            """
+            Brings in the port_beta function from backend.
+            """
             portbeta = portfolio_beta(profileName)
             portbetaLabel = Label(self, text = portbeta, fg = 'white', bg = '#232833', font="Verdana 12")
             portbetaLabel.place(x = 135, y = 590)
@@ -318,6 +348,9 @@ class ProfileWidget(tk.Frame):
         ## Portfolio Dev
 
         def port_dev():
+            """
+            Brings in port_dev from backend
+            """
             portdev = portfolio_std_dev(profileName)
             portdevLabel = Label(self, text = portdev, fg = 'white', bg = '#232833', font="Verdana 12")
             portdevLabel.place(x = 405, y = 590)

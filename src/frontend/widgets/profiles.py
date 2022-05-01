@@ -1,9 +1,7 @@
 import tkinter as tk
-from functools import partial
 from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
-from tkinter.messagebox import showerror
 import tkinter.font as fnt
 from pathlib import Path
 
@@ -14,7 +12,13 @@ from backend.delete_profile import delete_profile
 ### Main
 
 class ProfilesWidget(tk.Frame):
+    """
+    The widget for the main profile page
+    """
     def __init__(self, parent, select_profile_callback):
+        """
+        Setting up the frame
+        """
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.configure(bg='#272c38')
@@ -60,20 +64,6 @@ class ProfilesWidget(tk.Frame):
         homeBGDiv.image = homeBG
         homeBGDiv.place(x=0, y=0, relwidth=1)
         homeBGDiv.lower()
-        # self.create_image(0, 0, image=homeBG, anchor = 'nw') ### This doesn't actually work, keep it commented out. Just saw create_image as a possible solution
-
-        # # Main Div
-
-        # maindivImage = Path(__file__).parent.resolve() / 'Images' / 'TopDivLine.png'
-
-        # topdivlineLoc = Image.open(maindivImage)
-        # topdivLine = ImageTk.PhotoImage(topdivlineLoc)
-
-        # topplacedDiv = tk.Label(self, image = topdivLine, bg = '#272c38')
-        # topplacedDiv.image = topdivLine
-        # topplacedDiv.grid(row = 16, column = 1, padx=10, pady=10)
-
-        # Diving Line Widgets
 
         subdivImage = Path(__file__).parent.resolve() / 'Images' / 'DividingLine.png'
 
@@ -95,7 +85,10 @@ class ProfilesWidget(tk.Frame):
 
         ### Loading a Profile
 
-        def callbackFunc(event): # Ties selection of profile to loading the profile
+        def callbackFunc(event):
+            """
+            Ties selection of profile to loading the profile
+            """
             profile = event.widget.get()
             selected = select_profile_callback(profile)
             return selected
@@ -112,9 +105,15 @@ class ProfilesWidget(tk.Frame):
         ### Adding a Profile
 
         def clear_error(value): # Removes error message.
+            """
+            For destroying the error labels.
+            """
             value.destroy()
 
-        def profile_check_callback(widget, cmd): # Handles outputting of error messages for adding a new profile and getting the input of the text box. Also handles deleting a profile to save on space.
+        def profile_check_callback(widget, cmd):
+            """
+            Handles outputting of error messages for adding a new profile and getting the input of the text box. Also handles deleting a profile to save on space
+            """
             userInput = widget.get('1.0', 'end-1c')
             invalidInput = Label(self, text = 'Done!', fg = 'green', bg = '#1f2631', font="Verdana 8 italic")
 
@@ -138,19 +137,15 @@ class ProfilesWidget(tk.Frame):
 
         # Visual for adding profile
 
-        # newprofileLabel = Label(self, text = 'Create a New Profile', fg = 'white', bg = '#1f2631', font="Verdana 12")
 
         submitButton = tk.Button(self, text = 'Add Profile', fg = 'white', bg = '#6e819e', activebackground = '#50678a', font = fnt.Font(font = "Verdana 10"), command = lambda : profile_check_callback(newProfile,add_profile)) # lambda needed so function doesn't run as soon as main is run.
 
-        # newprofileLabel.grid(row = 7, column = 1)
         newProfile.grid(row = 9, column = 1, padx=10, pady=10)
         submitButton.grid(row = 10, column = 1)
 
         ### Deleting a Profile
 
-        # deleteprofileLabel = Label(self, text = 'Delete a Profile', fg = 'white', bg = '#1f2631', font="Verdana 12")
         deletesubmitButton = tk.Button(self, text = 'Delete Profile', fg = 'white', bg = '#6e819e', activebackground = '#50678a', font = fnt.Font(font = "Verdana 10"), command = lambda : profile_check_callback(deleteProfile,delete_profile))
 
-        # deleteprofileLabel.grid(row = 12, column = 1)
         deleteProfile.grid(row = 15, column = 1, padx=10, pady=10)
         deletesubmitButton.grid(row = 16, column = 1)

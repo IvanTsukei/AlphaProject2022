@@ -19,6 +19,9 @@ df_m = pd.DataFrame()
 data = storage.read_data()
 
 def stock_list(name):
+    """
+    Function that lists all the stocks in the profile.
+    """
     existing = data['profiles'][profile_index(name)]['stocks']
     return existing
 
@@ -26,34 +29,40 @@ def stock_list(name):
 ### Functions
 
 def plot_daily_returns(data, name):
-            stocks = storage.read_data()
-            legend = stocks['profiles'][profile_index(name)]['stocks']
-            
-            fig, ax = plt.subplots(figsize=(8.260416, 2.60416), tight_layout = True)
-            ax.plot(data)
-            ax.legend(legend, loc='right', bbox_to_anchor=(1.114, .8), shadow=False, ncol=1, fontsize=7, frameon=False, labelcolor='white')
+    """
+    Function for plotting the daily returns using matplotlib.
+    """
+    stocks = storage.read_data()
+    legend = stocks['profiles'][profile_index(name)]['stocks']
+    
+    fig, ax = plt.subplots(figsize=(8.260416, 2.60416), tight_layout = True)
+    ax.plot(data)
+    ax.legend(legend, loc='right', bbox_to_anchor=(1.114, .8), shadow=False, ncol=1, fontsize=7, frameon=False, labelcolor='white')
 
-            ### Plotting
-            ax.xaxis.set_major_locator(MonthLocator())
-            ax.xaxis.set_major_formatter(DateFormatter("%b-%y"))
-            ax.tick_params(axis="x", labelrotation= 30)
-            ax.set_ylabel('Price ($)')
+    ### Plotting
+    ax.xaxis.set_major_locator(MonthLocator())
+    ax.xaxis.set_major_formatter(DateFormatter("%b-%y"))
+    ax.tick_params(axis="x", labelrotation= 30)
+    ax.set_ylabel('Price ($)')
 
-            ### Design elements
-            ax.tick_params(axis='x', colors='white')
-            ax.tick_params(axis='y', colors='white')
-            ax.yaxis.label.set_color('white')
-            ax.spines['bottom'].set_color('white')
-            ax.spines['top'].set_color('white') 
-            ax.spines['right'].set_color('white')
-            ax.spines['left'].set_color('white')
+    ### Design elements
+    ax.tick_params(axis='x', colors='white')
+    ax.tick_params(axis='y', colors='white')
+    ax.yaxis.label.set_color('white')
+    ax.spines['bottom'].set_color('white')
+    ax.spines['top'].set_color('white') 
+    ax.spines['right'].set_color('white')
+    ax.spines['left'].set_color('white')
 
 
-            ### Saving
-            fileLoc = Path(__file__).parents[1] / 'frontend' / 'widgets' /'Images' / 'dailyreturns.png'
-            ax.figure.savefig(fileLoc, transparent=True)
+    ### Saving
+    fileLoc = Path(__file__).parents[1] / 'frontend' / 'widgets' /'Images' / 'dailyreturns.png'
+    ax.figure.savefig(fileLoc, transparent=True)
 
 def stock_basic_history(name):
+    """
+    Function to fetch the closing prices, daily returns, for stocks from the last year.
+    """
     existing = data['profiles'][profile_index(name)]['stocks']
 
     today = date.today()
@@ -66,6 +75,9 @@ def stock_basic_history(name):
 
 
 def portfolio_dividends(name, starting, ending):
+    """
+    Function for fetching the dividends of each stock in the profile.
+    """
     existing = stock_list(name)
 
     if get_profile(name) == "Please enter a valid profile name.":
@@ -80,6 +92,9 @@ def portfolio_dividends(name, starting, ending):
                             
 
 def portfolio_daily_returns(name, starting, ending): # % change
+    """
+    Function for calculating the daily returns of the portfolio.
+    """
     existing = data['profiles'][profile_index(name)]['stocks']
 
     if get_profile(name) == "Please enter a valid profile name.":
@@ -92,6 +107,9 @@ def portfolio_daily_returns(name, starting, ending): # % change
 
 
 def portfolio_beta(name):
+    """
+    Function for calculating the portfolio beta.
+    """
     existing = data['profiles'][profile_index(name)]['stocks']
 
     weights = [1/len(existing) for x in range(len(existing))] # Don't have time to code a more complex system that would allow people to enter their own weights. This assumes equally weighted portfolio 
@@ -118,6 +136,9 @@ def portfolio_beta(name):
 
 
 def portfolio_std_dev(name):
+    """
+    Function for calculating the portfolio std. deviation.
+    """
     existing = data['profiles'][profile_index(name)]['stocks']
 
     weights = np.array([1/len(existing) for x in range(len(existing))])# Don't have time to code a more complex system that would allow people to enter their own weights. This assumes equally weighted portfolio 
@@ -139,6 +160,9 @@ def portfolio_std_dev(name):
 ### Calculation Functions
 
 def portfolio_extected_return(name, starting, ending):
+    """
+    Function for calculating the portfolio expected returns.
+    """
     existing = data['profiles'][profile_index(name)]['stocks']
 
     if get_profile(name) == "Please enter a valid profile name.":
@@ -155,6 +179,9 @@ def portfolio_extected_return(name, starting, ending):
 ###################################################################
 
 def all_basic_stock_info(ticker):
+    """
+    Function that returns a pandas df of basic stock info.
+    """
 
     today = date.today()
     weeknumber = datetime.today().weekday()

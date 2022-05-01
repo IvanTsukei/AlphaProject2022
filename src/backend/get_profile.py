@@ -3,6 +3,9 @@ from backend.list_profiles import return_profiles
 ### Takes in a profile name, returns false if profile is not found, otherwise returns the profile
 
 def get_profile(name):
+    """
+    Function for fetching the profile.
+    """
     if name.lower() in [profile['name'].lower() for profile in return_profiles()]:
         for profile in return_profiles():
             if profile['name'].lower() == name.lower():
@@ -13,6 +16,9 @@ def get_profile(name):
         return "Please enter a valid profile name."
 
 def profile_index(name):
+    """
+    Function for getting the index of the profile.
+    """
     profiles = return_profiles()
     if name.lower() in [profile['name'].lower() for profile in profiles]:
         for i in range(len(profiles)):
@@ -22,6 +28,9 @@ def profile_index(name):
     return "Please enter a valid profile name."
 
 def profile_exists(name):
+    """
+    Function for returning the profile name.
+    """
     return name.lower() in [profile['name'].lower() for profile in return_profiles()]
 
 

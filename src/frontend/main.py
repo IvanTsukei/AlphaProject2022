@@ -10,9 +10,15 @@ from frontend.widgets.analysis import AnalysisWidget
 ### Main
 
 class App(tk.Tk):
+    """
+    The frontpage widget.
+    """
     state = "Home"
 
     def __init__(self):
+        """
+        Sets up the entire app.
+        """
         super().__init__()
         self.title("Python Portfolio Tracker")
         iconImage = Path(__file__).parent.resolve() / 'widgets' /'Images' / 'AppLogo.ico'
@@ -29,11 +35,17 @@ class App(tk.Tk):
         self.analysisWidget = AnalysisWidget(self, self.back_callback)
 
     def clear_screen(self):
+        """
+        Clears the screen when switching pages.
+        """
         self.plistWidget.grid_remove()
         self.pWidget.grid_remove()
         self.analysisWidget.grid_remove()
 
     def back_callback(self):
+        """
+        Handles screen switching through the back button.
+        """
         self.clear_screen()
         if self.state == "Profile":
             self.state == "Home"

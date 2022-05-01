@@ -5,6 +5,9 @@ import backend.storage as storage
 ### Takes in a profile name, returns false if profile is not found, otherwise deletes the profile
 
 def delete_profile(name):
+    """
+    Function for deleting a profile.
+    """
     data = storage.read_data()
 
     if get_profile(name) == "Please enter a valid profile name.":

@@ -5,12 +5,18 @@ import backend.storage as storage
 #If it doesn't pass checks, returns false, otherwise returns true
 
 def add_profile(name, email):
+    """
+    Function for adding a new profile.
+    """
 
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
     currentProfiles = storage.read_data()['profiles']
 
-    def invalid_name_input(name): # Name checker function
+    def invalid_name_input(name):
+        """
+        Checks if the profile name is valid.
+        """
         if len(name) == 0 or len(name) > 20:
             raise ValueError ("Please only enter between 0 and 20 characters.")
             
@@ -24,7 +30,10 @@ def add_profile(name, email):
 
         return False
 
-    def invalid_email_input(value): # Email checker function
+    def invalid_email_input(value):
+        """
+        Checks if the email is valid.
+        """
         if not (re.fullmatch(regex, value)):
             raise ValueError ("Please enter a valid email.")
 
